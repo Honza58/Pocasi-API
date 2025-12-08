@@ -1,0 +1,4 @@
+#ignorovat gitem obrázky
+img/
+#ignorovat gitem záložní obrázky
+img-zaloha/
