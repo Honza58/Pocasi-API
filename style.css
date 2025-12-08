@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: poppins, cursive, sans-serif;
+  position: relative;
+}
+
+/* obal */
+.container {
+  padding-top: 15px;
+  max-width: 65%;
+  height: 100vh;
+  margin: auto;
+  background-image: url(img/fototapety-zelena-priroda-krajina.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+/* nadpis */
+h1 {
+  width: 150px;
+  margin: 20px auto;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 260%;
+}
+
+/* input pro zadání města + tlačítko */
+.inputCity {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: larger;
+  margin-bottom: 30px;
+}
+
+.cityInput {
+  height: 30px;
+}
+
+#weatherButton {
+  border-radius: 5px;
+  /* border: none; */
+  background-color: #e6e9ef;
+  padding: 10px;
+  font-size: 0.8em;
+  width: 20%;
+  transition: width 0.7s ease, font-size 0.3s ease;
+
+}
+/* animace tlačítka */
+#weatherButton:hover {
+  font-size: 0.82em;
+  width: 25%;
+}
+
+/* seznam ikon a stavu o počasí + jednotlivá data o současném počasí po kliknutí na tlačítko */
+.list-icons-items {
+  padding: 50px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-left: 20%;
+  margin-right: 5%;
+  background-color: rgba(15, 255, 195, 0.2);
+  backdrop-filter: blur(6px) saturate(1) contrast(1);
+  box-shadow: 3px 3px 3px rgb(0, 0, 0, 0.089);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 30% 0 0 0;
+
+  /* border-color: #e6e9ef #ededed #ededed #e6e9ef;
+  box-shadow: inset 10px 10px 25px 5px rgba(20, 20, 20, 0.2), inset -10px -10px 25px 5px rgba(255, 255, 255, 0.9); */
+}
+
+/* datum a čas kdy došlo k načtení dat o počasí */
+.date-time-current-weather {
+  display: flex;
+  justify-content: end;
+  gap: 5%;
+  width: 100%;
+}
+.container-date,
+.container-timeGetOfData {
+  width: 20%;
+  height: 40px;
+  border-color: #e6e9ef #dfdddd #c5c4c4 #e6e9ef;
+  background-color: rgba(207, 207, 207, 0.6);
+  box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.current-weather {
+  margin-left: 20px;
+  margin-right: 10px;
+  font-size: 15px;
+  padding: 10px 5px 10px 5px;
+  text-align: center;
+  background-color: rgba(207, 207, 207, 0.6);
+  box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
+  width: 25%;
+  height: 40px;
+  border-radius: 10px;
+}
+
+/* ---ikony + text k načteným datům */
+.only-icon-label {
+  display: flex;
+  gap: 20px;
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.icons-text {
+  display: flex;
+  gap: 10px;
+}
+
+.icons-label {
+  padding-top: 8px;
+}
+/* vlastní načtená data */
+.current-weather-data {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+span {
+  display: inline-block;
+  height: 35px;
+}
+
+.item1,
+.item2,
+.item3,
+.item4,
+.item5,
+.item6,
+.item7,
+.item9 {
+  padding-top: 5px;
+}
+
+/* ---třídy pro ukrývání a zobrazování elementů na stránce pomocí javasriptu--- */
+.hidden {
+  display: none;
+}
