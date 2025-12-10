@@ -15,8 +15,8 @@ let item9 = document.querySelector(".item9");
 let date = document.querySelector(".date");
 const weatherButton = document.getElementById("weatherButton");
 
-// akce po kliknutí = funkce loadWeather
-weatherButton.addEventListener("click", (klik) => {
+// akce po kliknutí=funkce loadWeather
+weatherButton.addEventListener("click", () => {
   loadWeather();
 });
 // Deklarace proměnných pro pozdější použití
@@ -28,7 +28,6 @@ let reverseDate;
 
 // API načtení dat s open-meteo.com
 function loadWeather() {
-
   // ukrytí všech ikon počasí
   const allIcons = document.querySelectorAll("[class^='weather-icon-label-']");
   allIcons.forEach((icons) => {
@@ -38,20 +37,28 @@ function loadWeather() {
   // načtení hodnoty z inputu
   const cityInput = document.querySelector(".cityInput").value;
 
+  //url zadaného města s daty
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=1&language=cs`;
+  // vrátí odpověď do geoResponse na základě požadavku geoUrl
+  // return-přečte tělo odpovědi pomocí.json() a vrátí tělo odpovědi do geoData
   fetch(geoUrl)
     .then((geoResponse) => {
       return geoResponse.json();
     })
+    // geoData vytáhne souřadnice a vloží do proměnné urlWeather
+    // fetch(urlWeather) vyšle požadavek a odpověď se uloží do weatherResponse
     .then((geoData) => {
       const { latitude, longitude } = geoData.results[0];
       const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
 
       return fetch(urlWeather);
     })
+    // return-přečte tělo odpovědi pomocí json() a vrátí tělo odpovědi do data
+    //už jde o konkrétní data o počasí!!!
     .then((weatherResponse) => {
       return weatherResponse.json();
     })
+    //konkrétní data o počasí
     .then((data) => {
       // zobrazení na stránce
       itemSunrise = data.daily.sunrise[0];
