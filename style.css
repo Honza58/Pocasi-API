@@ -46,19 +46,115 @@ h1 {
 }
 
 #weatherButton {
-  border-radius: 5px;
-  /* border: none; */
-  background-color: #e6e9ef;
-  padding: 10px;
+  position: relative;
+  border-radius: 5px 5px 5px 5px;
+  background-color: rgba(15, 255, 195, 0.2);
+  backdrop-filter: blur(6px) saturate(1) contrast(1);
+  box-shadow: 3px 3px 3px rgb(0, 0, 0, 0.089);
+  border: 2px solid rgb(21, 207, 161);
+  padding: 5px;
   font-size: 0.8em;
-  width: 20%;
-  transition: width 0.7s ease, font-size 0.3s ease;
+  width: 13%;
+  transition: width 0.7s ease, font-size 0.3s ease, border-radius 0.7s ease;
 
+  cursor: pointer;
 }
-/* animace tlačítka */
+
+@keyframes borderSlowlyHidden {
+  0% {
+    border-color: rgba(21, 207, 161, 1);
+  }
+  20% {
+    border-color: rgba(21, 207, 161, 0.8);
+  }
+  40% {
+    border-color: rgba(21, 207, 161, 0.6);
+  }
+  60% {
+    border-color: rgba(21, 207, 161, 0.4);
+  }
+  80% {
+    border-color: rgba(21, 207, 161, 0.2);
+  }
+  100% {
+    border-color: transparent;
+  }
+}
+
 #weatherButton:hover {
-  font-size: 0.82em;
-  width: 25%;
+  /* font-size: 0.82em; */
+  width: 15%;
+  border-radius: 13px 0 13px 0;
+  animation: borderSlowlyHidden 0.6s forwards;
+}
+
+/* animace tlačítka */
+/* levý-horní roh */
+#weatherButton::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  border-top: 2px solid rgb(21, 207, 161);
+  border-left: 2px solid rgb(21, 207, 161);
+  border-top-left-radius: 10px;
+  width: 20px;
+  height: 20px;
+  /* na začátku jsou rohy skryté */
+  opacity: 0;
+  /* jak rychle se změní opacity u #weatherButton:hover::before, #weatherButton:hover::after */
+  /* transition: opacity 1s ease; */
+}
+
+/* pravý-dolní roh */
+#weatherButton::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  border-right: 2px solid rgb(21, 207, 161);
+  border-bottom: 2px solid rgb(21, 207, 161);
+  border-bottom-right-radius: 10px;
+  width: 20px;
+  height: 20px;
+  /* na začátku jsou rohy skryté */
+  opacity: 0;
+  /* jak rychle se změní opacity u #weatherButton:hover::before, #weatherButton:hover::after */
+  /* transition: opacity 1s ease; */
+}
+
+@keyframes showCornerBefore {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes showCornerAfter {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#weatherButton:hover::before {
+  animation: showCornerBefore 0.7s forwards;
+  /* animation-delay: 1s; */
+}
+#weatherButton:hover::after {
+  animation: showCornerAfter 0.7s forwards;
+ 
+  /* animation-delay: 1s; */
 }
 
 /* seznam ikon a stavu o počasí + jednotlivá data o současném počasí po kliknutí na tlačítko */
