@@ -14,15 +14,15 @@
     <div class="container">
       <h1>Počasí</h1>
 
-      <!-- input pro zadání města + tlačítko -->
+      <!-- obal-input pro zadání města + tlačítko -->
       <div class="inputCity">
         <div class="mt"><input type="text" class="cityInput" id="cityInput" placeholder="Zadej město" /></div>
         <button id="weatherButton">Zobrazit počasí</button>
       </div>
 
-      <!-- obalující element seznam ikon a stavu o počasí + zobrazení aktuálních dat o současném počasí po kliknutí na tlačítko + popisky k počasí-->
+      <!-- obalující element seznam ikon, stav počasí, popisky k počasí, datum,čas,aktuální stav o počasí-horní část-->
       <div class="list-icons-items">
-        <!-- obalující element  datum a čas + zobrazení aktuálních dat o počasí -->
+        <!-- obalující element jen datum,čas,aktuální stav o počasí-horní část -->
         <div class="date-time-current-weather">
           <!-- datum a čas kdy došlo k načtení dat o počasí -->
           <div class="container-date">
@@ -32,7 +32,7 @@
             <div class="timeGetOfData"></div>
           </div>
 
-          <!-- vždy jedna ikona s textem vpravo nahoře v šedém poli = značí vždy současné počasí např: ikona + (zataženo, jasno atd.) -->
+          <!-- vždy jedna ikona s textem vpravo nahoře v šedém poli=značí vždy současné počasí např:ikona+(zataženo, jasno atd.) -->
           <div class="current-weather">
             <div class="weather-icon-label-0 hidden styling-weather-icon"><i class="wi wi-wmo4680-0"></i>Jasno</div>
             <div class="weather-icon-label-1 hidden styling-weather-icon"><i class="wi wi-wmo4680-1"></i>Převážně jasno</div>
@@ -64,12 +64,13 @@
             <div class="weather-icon-label-96 hidden styling-weather-icon"><i class="wi wi-wmo4680-96"></i>Bouřka s malými kroupami</div>
             <div class="weather-icon-label-99 hidden styling-weather-icon"><i class="wi wi-wmo4680-99"></i>Bouřka s velkými kroupami</div>
           </div>
-          <!-- ikona s textem vpravo nahoře v šedém poli = značí vždy současné počasí např: ikona + (zataženo, jasno atd.) -->
+          <!-- konec-vždy jedna ikona s textem vpravo nahoře v šedém poli = značí vždy současné počasí např: ikona + (zataženo, jasno atd.) -->
         </div>
-        <!-- konec - obalující element  datum a čas + zobrazení aktuálních dat  -->
+        <!-- konec-obalující element jen datum,čas,aktuální stav o počasí-horní část -->
 
-        <!--obalující element ikony + text k načteným datům -->
+        <!--obalující element,rodič, ikony + text k načteným datům -->
         <div class="only-icon-label">
+          <!-- obal dítě ikony text -->
           <div class="icons">
             <div class="icons-text">
               <img src="img/sunrise-35.png" alt="" />
@@ -100,7 +101,7 @@
               <p class="icons-label">Rychlost větru v 10m:</p>
             </div>
           </div>
-          <!-- vlastní načtená data -->
+          <!-- obal načtená data o počasí-->
           <div class="current-weather-data">
             <span class="item1"></span>
             <span class="item2"></span>
@@ -111,13 +112,13 @@
             <span class="item7"></span>
             <span class="item9"></span>
           </div>
-          <!-- konec - vlastní načtená data -->
+          <!-- konec-obal načtená data o počasí -->
         </div>
-        <!-- konec - obalující element ikony + text k načteným datům -->
+        <!-- konec-obalující element ikony + text k načteným datům -->
       </div>
-      <!-- konec - seznam ikon a stavu o počasí + jednotlivá data o současném počasí po kliknutí na tlačítko -->
+      <!-- konec-obalující element seznam ikon, stav počasí, popisky k počasí, datum,čas,aktuální stav o počasí-horní část -->
     </div>
-    <!-- konec - obalující element -->
+    <!-- konec-obalující element -->
 
     <script src="script.js"></script>
   </body>
