@@ -38,28 +38,46 @@ function loadWeather() {
   const cityInput = document.querySelector(".cityInput").value;
 
   //url zadaného města s daty
-  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=1&language=cs`;
-  // vrátí odpověď do geoResponse na základě požadavku geoUrl
-  // return-přečte tělo odpovědi pomocí.json() a vrátí tělo odpovědi do geoData
+  //použije se jako dotaz n API open-meteo
+  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=10&language=cs&country=cz`;
+  console.log("geoUrl", geoUrl);
+
+  // vrátí surovou odpověď do geoResponse na základě požadavku geoUrl, jedná se o objekt typu response
+  // pomocí.json() převedeme(vypársujeme) z geoResponse ze surové odpovědi JSON objekt(pole results) např: name, latitude, longitude
+  // return - vrátí JSON objekt(pole results) do geoData
   fetch(geoUrl)
     .then((geoResponse) => {
+      console.log("geoResponse", geoResponse);
+
       return geoResponse.json();
     })
-    // geoData vytáhne souřadnice a vloží do proměnné urlWeather
+    // pomocí geoData sestavíme požadavek na předpověď počasí
     // fetch(urlWeather) vyšle požadavek a odpověď se uloží do weatherResponse
     .then((geoData) => {
+      console.log("geoData", geoData);
+
+      // const geoData1 = geoData.results.find((mestoCz) => mestoCz.country_code === "CZ");
+      // console.log("geoData1", geoData1);
+
       const { latitude, longitude } = geoData.results[0];
+      console.log("latitude,longtitude", latitude, longitude);
+      
       const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
+      console.log("urlWeather", urlWeather);
 
       return fetch(urlWeather);
     })
-    // return-přečte tělo odpovědi pomocí json() a vrátí tělo odpovědi do data
-    //už jde o konkrétní data o počasí!!!
+    // vrátí surovou odpověď do weatherResponse na základě požadavku urlWeather, jedná se o objekt typu response
+    // pomocí.json() převedeme(vypársujeme) z weatherResponse ze surové odpovědi JSON objekt(pole results) např: name, latitude, longitude
     .then((weatherResponse) => {
+      console.log("weatherResponse", weatherResponse);
+
       return weatherResponse.json();
     })
-    //konkrétní data o počasí
+    //konkrétní vypársovaná data o počasí
     .then((data) => {
+      console.log("data", data);
+
       // zobrazení na stránce
       itemSunrise = data.daily.sunrise[0];
       item1.textContent = `${itemSunrise.split("T")[1]}`;
