@@ -14,6 +14,40 @@ let timeGetOfData = document.querySelector(".timeGetOfData");
 let item9 = document.querySelector(".item9");
 let date = document.querySelector(".date");
 const weatherButton = document.getElementById("weatherButton");
+let dataList = document.getElementById("citiesList"); //dataList id =citiesInput
+let cityInput = document.querySelector(".cityInput"); // input řádek pro psaní názvů měst
+
+// Získávání seznamu,nabídky měst v inputu
+// při psaní názvu města se z inputu rozbalí seznam názvů měst např: Praha, CZ
+cityInput.addEventListener("input", () => {
+  const query = cityInput.value.trim();
+  if (query.length < 2) {
+    return;
+  }
+
+  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10&language=cs`;
+
+  fetch(geoUrl)
+    .then((response) => {
+      return response.json();
+    })
+    .then((geoData) => {
+      console.log("geoData na Inputu při psaní", geoData);
+
+      dataList.innerHTML = "";
+
+      if (!geoData.results || geoData.results.length === 0) {
+        console.log("Žádné výsledky pro dotaz:", query);
+        return; // ukončí funkci, když není co zobrazit
+      }
+
+      geoData.results.forEach((cities) => {
+        const option = document.createElement("option");
+        option.value = `${cities.name}, ${cities.country_code}`;
+        dataList.appendChild(option);
+      });
+    });
+});
 
 // akce po kliknutí=funkce loadWeather
 weatherButton.addEventListener("click", () => {
@@ -26,7 +60,7 @@ let itemLastTime;
 let defaultDate;
 let reverseDate;
 
-// API načtení dat s open-meteo.com
+// Funkce -  API načtení dat s open-meteo.com
 function loadWeather() {
   // ukrytí všech ikon počasí
   const allIcons = document.querySelectorAll("[class^='weather-icon-label-']");
@@ -35,11 +69,11 @@ function loadWeather() {
   });
 
   // načtení hodnoty z inputu
-  const cityInput = document.querySelector(".cityInput").value;
+  cityInput = document.querySelector(".cityInput").value.split(",")[0].trim();
 
   //url zadaného města s daty
   //použije se jako dotaz n API open-meteo
-  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=10&language=cs&country=cz`;
+  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=10&language=cs`;
   console.log("geoUrl", geoUrl);
 
   // vrátí surovou odpověď do geoResponse na základě požadavku geoUrl, jedná se o objekt typu response
@@ -61,7 +95,7 @@ function loadWeather() {
 
       const { latitude, longitude } = geoData.results[0];
       console.log("latitude,longtitude", latitude, longitude);
-      
+
       const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
       console.log("urlWeather", urlWeather);
 
