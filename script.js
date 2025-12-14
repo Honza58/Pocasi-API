@@ -1,7 +1,6 @@
-//API - počasí
-//Získání dat o počasí a uložení do proměnné
+//API počasí - načtení dat a zobrazení na stránce
 
-//načtení proměnných
+// HTML prvky pro výpis dat
 let paragraphWeather = document.querySelector(".paragraphWeather");
 let item1 = document.querySelector(".item1");
 let item2 = document.querySelector(".item2");
@@ -10,109 +9,86 @@ let item4 = document.querySelector(".item4");
 let item5 = document.querySelector(".item5");
 let item6 = document.querySelector(".item6");
 let item7 = document.querySelector(".item7");
-let timeGetOfData = document.querySelector(".timeGetOfData");
+let timeGetOfData = document.querySelector(".timeGetOfData"); //čas měření
 let item9 = document.querySelector(".item9");
 let date = document.querySelector(".date");
 const weatherButton = document.getElementById("weatherButton");
-let dataList = document.getElementById("citiesList"); //dataList id =citiesInput
-let cityInput = document.querySelector(".cityInput"); // input řádek pro psaní názvů měst
+let dataList = document.getElementById("citiesList"); // seznam měst pro input
+let cityInput = document.querySelector(".cityInput"); // pole pro zadání města
 
-// Získávání seznamu,nabídky měst v inputu
-// při psaní názvu města se z inputu rozbalí seznam názvů měst např: Praha, CZ
+// Při psaní do inputu vyhledáme města (od 2 znaků)
 cityInput.addEventListener("input", () => {
   const query = cityInput.value.trim();
-  if (query.length < 2) {
-    return;
-  }
 
+  if (query.length < 2) {
+    return; // dokud podmínka splněna return ukončí funkci a kód dál nepokračuje
+  }
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=10&language=cs`;
 
   fetch(geoUrl)
     .then((response) => {
-      return response.json();
+      return response.json(); //surová odpověď se převádí na json objekt
     })
     .then((geoData) => {
-      console.log("geoData na Inputu při psaní", geoData);
-
       dataList.innerHTML = "";
-
       if (!geoData.results || geoData.results.length === 0) {
-        console.log("Žádné výsledky pro dotaz:", query);
-        return; // ukončí funkci, když není co zobrazit
+        return; // dokud podmínka splněna return ukončí funkci a kód dál nepokračuje
       }
-
+      // naplníme seznam měst
       geoData.results.forEach((cities) => {
         const option = document.createElement("option");
-        option.value = `${cities.name}, ${cities.country_code}`;
+        option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj`;
         dataList.appendChild(option);
       });
     });
 });
 
-// akce po kliknutí=funkce loadWeather
+//  Po kliknutí na tlačítko načteme počasí
 weatherButton.addEventListener("click", () => {
   loadWeather();
 });
 // Deklarace proměnných pro pozdější použití
 let itemSunrise;
 let itemSunset;
-let itemLastTime;
-let defaultDate;
-let reverseDate;
 
 // Funkce -  API načtení dat s open-meteo.com
 function loadWeather() {
-  // ukrytí všech ikon počasí
+  // schováme všechny ikony počasí
   const allIcons = document.querySelectorAll("[class^='weather-icon-label-']");
   allIcons.forEach((icons) => {
     icons.classList.add("hidden");
   });
 
-  // načtení hodnoty z inputu
+  // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
   cityInput = document.querySelector(".cityInput").value.split(",")[0].trim();
 
-  //url zadaného města s daty
-  //použije se jako dotaz n API open-meteo
+  // dotaz na geolokaci města
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=10&language=cs`;
-  console.log("geoUrl", geoUrl);
 
   // vrátí surovou odpověď do geoResponse na základě požadavku geoUrl, jedná se o objekt typu response
   // pomocí.json() převedeme(vypársujeme) z geoResponse ze surové odpovědi JSON objekt(pole results) např: name, latitude, longitude
   // return - vrátí JSON objekt(pole results) do geoData
   fetch(geoUrl)
     .then((geoResponse) => {
-      console.log("geoResponse", geoResponse);
-
       return geoResponse.json();
     })
     // pomocí geoData sestavíme požadavek na předpověď počasí
-    // fetch(urlWeather) vyšle požadavek a odpověď se uloží do weatherResponse
     .then((geoData) => {
-      console.log("geoData", geoData);
-
-      // const geoData1 = geoData.results.find((mestoCz) => mestoCz.country_code === "CZ");
-      // console.log("geoData1", geoData1);
-
       const { latitude, longitude } = geoData.results[0];
-      console.log("latitude,longtitude", latitude, longitude);
 
+      // dotaz na počasí podle souřadnic
       const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
-      console.log("urlWeather", urlWeather);
 
       return fetch(urlWeather);
     })
     // vrátí surovou odpověď do weatherResponse na základě požadavku urlWeather, jedná se o objekt typu response
     // pomocí.json() převedeme(vypársujeme) z weatherResponse ze surové odpovědi JSON objekt(pole results) např: name, latitude, longitude
     .then((weatherResponse) => {
-      console.log("weatherResponse", weatherResponse);
-
       return weatherResponse.json();
     })
     //konkrétní vypársovaná data o počasí
     .then((data) => {
-      console.log("data", data);
-
-      // zobrazení na stránce
+      // výpis dat na stránku
       itemSunrise = data.daily.sunrise[0];
       item1.textContent = `${itemSunrise.split("T")[1]}`;
       itemSunset = data.daily.sunset[0];
@@ -124,22 +100,18 @@ function loadWeather() {
       item7.textContent = `${data.current.wind_speed_10m} km/h`;
 
       // Ćas
-      itemLastTime = data.current.time;
-      timeGetOfData.textContent = `${itemLastTime.split("T")[1]}`;
+      timeGetOfData.textContent = `${data.current.time.split("T")[1]}`;
 
       // datum
-      defaultDate = `${data.daily.time[0]}`;
-      let [year, month, day] = defaultDate.split("-");
-      reverseDate = `${day}. ${month}. ${year}`;
-      date.textContent = reverseDate;
+      let [year, month, day] = data.daily.time[0].split("-");
+      date.textContent = `${day}. ${month}. ${year}`;
 
       // zobrazení aktuálního stavu počasí dle čísla kódu z API open-meteo.cz, např: jasno + ikona
       item9.textContent = `${data.current.weather_code}`;
       const specificCodeApi = Number(item9.textContent);
       const displayWeather = document.querySelector(`.weather-icon-label-${specificCodeApi}`);
 
-      //zobrazuje stav počasí pomocí ikony s textem v pravo nahoře: např: jasno.
-      // item9.classList.... ukrývá číslo získané pomocí API
+      // zobrazíme ikonu podle kódu počasí
       if (displayWeather) {
         displayWeather.classList.remove("hidden");
         item9.classList.add("hidden");
