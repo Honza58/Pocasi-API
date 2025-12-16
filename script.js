@@ -30,14 +30,15 @@ cityInput.addEventListener("input", () => {
       return response.json(); //surová odpověď se převádí na json objekt
     })
     .then((geoData) => {
-      // dataList.innerHTML = "";
+      dataList.innerHTML = "";
       if (!geoData.results || geoData.results.length === 0) {
         return; // dokud podmínka splněna return ukončí funkci a kód dál nepokračuje
       }
+
       // naplníme seznam měst
       geoData.results.forEach((cities) => {
         const option = document.createElement("option");
-        option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj `;
+        option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj`;
         dataList.appendChild(option);
       });
     });
@@ -60,8 +61,9 @@ function loadWeather() {
   });
 
   // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
-  cityInput = document.querySelector(".cityInput").value;
-  const parts = cityInput.split(",").map((p) => {
+  const valueCity = cityInput.value.trim();
+
+  const parts = valueCity.split(",").map((p) => {
     return p.trim();
   });
 
@@ -84,9 +86,9 @@ function loadWeather() {
       if (!geoData.results) {
         return;
       }
+
       // vymažeme slovo kraj
       const cleanRegion = region.replace(" kraj", "");
-
       // vybereme město dle country_code a kraje
       const result = geoData.results.find((r) => {
         if (r.country_code === countryCode && r.admin1 === cleanRegion) {
@@ -95,6 +97,8 @@ function loadWeather() {
           return false;
         }
       });
+      // zastavujeme kód pokud je result false
+      if (!result) return;
       // přeneseme do požadavku zeměpisnou šířku a délku
       const { latitude, longitude } = result;
 
@@ -139,4 +143,6 @@ function loadWeather() {
         item9.classList.add("hidden");
       }
     });
+  // mažeme input po kliknutí na tlačítko
+  cityInput.value = "";
 }
