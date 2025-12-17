@@ -15,8 +15,9 @@ let date = document.querySelector(".date");
 const weatherButton = document.getElementById("weatherButton");
 let dataList = document.getElementById("citiesList"); // seznam měst pro input
 let cityInput = document.querySelector(".cityInput"); // pole pro zadání města
+const noticeMessage = document.getElementById("noticeMessage");
 
-// Při psaní do inputu vyhledáme města (od 2 znaků)
+// Při psaní do inputu vyhledáme město, county_code, název kraje (od 2 znaků)
 cityInput.addEventListener("input", () => {
   const query = cityInput.value.trim();
 
@@ -38,11 +39,52 @@ cityInput.addEventListener("input", () => {
       // naplníme seznam měst
       geoData.results.forEach((cities) => {
         const option = document.createElement("option");
+        console.log(cities);
+
         option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj`;
         dataList.appendChild(option);
       });
     });
 });
+
+// kontrola při výběru položky z datalistu
+cityInput.addEventListener("change", () => {
+  const valueCity0 = cityInput.value.trim();
+  if (!valueCity0) {
+    return;
+  }
+  const parts = valueCity0.split(",").map((r) => {
+    return r.trim();
+  });
+  const cityName0 = parts[0];
+  const countryCode0 = parts[1];
+  const region0 = parts[2]?.replace(" kraj", ""); // nevyhodí chybu díky ?, zůstane undefined, pokud parts[2] je undefined nebo null
+
+  const geoUrl0 = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName0)}&count=10&language=cs`;
+
+  fetch(geoUrl0)
+    .then((geoResponse0) => {
+      return geoResponse0.json();
+    })
+    .then((geoData0) => {
+      if (!geoData0.results) {
+        return;
+      }
+      const result0 = geoData0.results.find((r) => {
+        return r.country_code === countryCode0 && r.admin1 === region0;
+      });
+      if (!result0) {
+        noticeMessage.textContent = "Nesprávný název města";
+        noticeMessage.classList.add("invalid");
+        noticeMessage.classList.remove("valid");
+      } else {
+        noticeMessage.textContent = "Správný název města.";
+        noticeMessage.classList.remove("invalid");
+        noticeMessage.classList.add("valid");
+      }
+    });
+});
+// zobrazíme hlášku pod input
 
 //  Po kliknutí na tlačítko načteme počasí
 weatherButton.addEventListener("click", () => {
@@ -61,46 +103,47 @@ function loadWeather() {
   });
 
   // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
-  const valueCity = cityInput.value.trim();
+  const valueCity1 = cityInput.value.trim();
+  console.log(valueCity1);
 
-  const parts = valueCity.split(",").map((p) => {
+  const parts = valueCity1.split(",").map((p) => {
     return p.trim();
   });
 
-  const cityName = parts[0];
-  const countryCode = parts[1];
-  const region = parts[2];
+  const cityName1 = parts[0];
+  const countryCode1 = parts[1];
+  const region1 = parts[2];
 
   // dotaz na geolokaci města
-  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=10&language=cs`;
+  const geoUrl1 = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName1)}&count=10&language=cs`;
 
   // vrátí surovou odpověď do geoResponse na základě požadavku geoUrl, jedná se o objekt typu response
   // pomocí.json() převedeme(vypársujeme) z geoResponse ze surové odpovědi JSON objekt(pole results) např: name, latitude, longitude
   // return - vrátí JSON objekt(pole results) do geoData
-  fetch(geoUrl)
-    .then((geoResponse) => {
-      return geoResponse.json();
+  fetch(geoUrl1)
+    .then((geoResponse1) => {
+      return geoResponse1.json();
     })
     // pomocí geoData sestavíme požadavek na předpověď počasí
-    .then((geoData) => {
-      if (!geoData.results) {
+    .then((geoData1) => {
+      if (!geoData1.results) {
         return;
       }
 
       // vymažeme slovo kraj
-      const cleanRegion = region.replace(" kraj", "");
+      const cleanRegion = region1.replace(" kraj", "");
       // vybereme město dle country_code a kraje
-      const result = geoData.results.find((r) => {
-        if (r.country_code === countryCode && r.admin1 === cleanRegion) {
+      const result1 = geoData1.results.find((r) => {
+        if (r.country_code === countryCode1 && r.admin1 === cleanRegion) {
           return true;
         } else {
           return false;
         }
       });
       // zastavujeme kód pokud je result false
-      if (!result) return;
+      if (!result1) return;
       // přeneseme do požadavku zeměpisnou šířku a délku
-      const { latitude, longitude } = result;
+      const { latitude, longitude } = result1;
 
       // dotaz na počasí podle souřadnic
       const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
@@ -142,7 +185,11 @@ function loadWeather() {
         displayWeather.classList.remove("hidden");
         item9.classList.add("hidden");
       }
+
+      console.log(noticeMessage);
     });
-  // mažeme input po kliknutí na tlačítko
+
+  // mažeme input a hlášku po kliknutí na tlačítko
   cityInput.value = "";
+  noticeMessage.textContent = "";
 }
