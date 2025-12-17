@@ -251,3 +251,17 @@ span {
 .hidden {
   display: none;
 }
+
+.invalid {
+  margin-top: 5px;
+  color: rgb(228, 23, 15);
+  font-size: 62%;
+  font-weight: bolder;
+}
+
+.valid {
+  margin-top: 5px;
+  color: rgb(15, 235, 107);
+  font-size: 62%;
+  font-weight: bolder;
+}
