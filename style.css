@@ -45,6 +45,12 @@ h1 {
   height: 30px;
 }
 
+#pattern {
+  color: rgb(24, 44, 20);
+  font-size: 65%;
+  font-weight: bolder ;
+}
+
 /* tlačítko */
 #weatherButton {
   position: relative;
@@ -261,7 +267,7 @@ span {
 
 .valid {
   margin-top: 5px;
-  color: rgb(15, 235, 107);
+  color: rgb(24, 44, 20);
   font-size: 62%;
   font-weight: bolder;
 }
