@@ -16,10 +16,23 @@ const weatherButton = document.getElementById("weatherButton");
 let dataList = document.getElementById("citiesList"); // seznam měst pro input
 let cityInput = document.querySelector(".cityInput"); // pole pro zadání města
 const noticeMessage = document.getElementById("noticeMessage");
+const regex = /^([^,]+),\s([A-Z]{2}),\s([^,])+\skraj$/;
 
 // Při psaní do inputu vyhledáme město, county_code, název kraje (od 2 znaků)
 cityInput.addEventListener("input", () => {
   const query = cityInput.value.trim();
+
+  if (!regex.test(query)) {
+    noticeMessage.textContent = "Zadej správný formát názvu města";
+    noticeMessage.classList.add("invalid");
+    noticeMessage.classList.remove("valid");
+    weatherButton.disabled = true;
+  } else {
+    noticeMessage.textContent = "Správný formát";
+    noticeMessage.classList.remove("invalid");
+    noticeMessage.classList.add("valid");
+    weatherButton.disabled = false;
+  }
 
   if (query.length < 2) {
     return; // pokud podmínka splněna return ukončí funkci a kód dál nepokračuje
@@ -39,7 +52,6 @@ cityInput.addEventListener("input", () => {
       // naplníme seznam měst
       geoData.results.forEach((cities) => {
         const option = document.createElement("option");
-        console.log(cities);
 
         option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj`;
         dataList.appendChild(option);
@@ -104,7 +116,6 @@ function loadWeather() {
 
   // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
   const valueCity1 = cityInput.value.trim();
-  console.log(valueCity1);
 
   const parts = valueCity1.split(",").map((p) => {
     return p.trim();
@@ -185,8 +196,6 @@ function loadWeather() {
         displayWeather.classList.remove("hidden");
         item9.classList.add("hidden");
       }
-
-      console.log(noticeMessage);
     });
 
   // mažeme input a hlášku po kliknutí na tlačítko
