@@ -59,31 +59,6 @@ cityInput.addEventListener("input", () => {
     });
 });
 
-// kontrola při výběru položky z datalistu
-cityInput.addEventListener("change", () => {
-  const valueCity0 = cityInput.value.trim();
-  if (!valueCity0) {
-    return;
-  }
-  const parts = valueCity0.split(",").map((r) => {
-    return r.trim();
-  });
-  const cityName0 = parts[0];
-
-  const geoUrl0 = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName0)}&count=10&language=cs`;
-
-  fetch(geoUrl0)
-    .then((geoResponse0) => {
-      return geoResponse0.json();
-    })
-    .then((geoData0) => {
-      if (!geoData0.results) {
-        return;
-      }
-    });
-});
-// zobrazíme hlášku pod input
-
 //  Po kliknutí na tlačítko načteme počasí
 weatherButton.addEventListener("click", () => {
   loadWeather();
