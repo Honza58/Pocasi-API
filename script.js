@@ -69,8 +69,6 @@ cityInput.addEventListener("change", () => {
     return r.trim();
   });
   const cityName0 = parts[0];
-  const countryCode0 = parts[1];
-  const region0 = parts[2]?.replace(" kraj", ""); // nevyhodí chybu díky ?, zůstane undefined, pokud parts[2] je undefined nebo null
 
   const geoUrl0 = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName0)}&count=10&language=cs`;
 
@@ -81,18 +79,6 @@ cityInput.addEventListener("change", () => {
     .then((geoData0) => {
       if (!geoData0.results) {
         return;
-      }
-      const result0 = geoData0.results.find((r) => {
-        return r.country_code === countryCode0 && r.admin1 === region0;
-      });
-      if (!result0) {
-        noticeMessage.textContent = "Nesprávný název města";
-        noticeMessage.classList.add("invalid");
-        noticeMessage.classList.remove("valid");
-      } else {
-        noticeMessage.textContent = "Správný název města.";
-        noticeMessage.classList.remove("invalid");
-        noticeMessage.classList.add("valid");
       }
     });
 });
