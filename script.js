@@ -13,24 +13,28 @@ let timeGetOfData = document.querySelector(".timeGetOfData"); //čas měření
 let item9 = document.querySelector(".item9");
 let date = document.querySelector(".date");
 const weatherButton = document.getElementById("weatherButton");
+
 let dataList = document.getElementById("citiesList"); // seznam měst pro input
 let cityInput = document.querySelector(".cityInput"); // pole pro zadání města
 const noticeMessage = document.getElementById("noticeMessage");
 const regex = /^([^,]+),\s([A-Z]{2}),\s([^,])+\skraj$/;
+const cityCountryRegion = document.querySelector(".cityName-countryCode-region");
 
 // Při psaní do inputu vyhledáme město, county_code, název kraje (od 2 znaků)
 cityInput.addEventListener("input", () => {
   const query = cityInput.value.trim();
 
   if (!regex.test(query)) {
-    noticeMessage.textContent = "Zadej správný formát názvu města";
+    noticeMessage.textContent = "Neprávný formát";
     noticeMessage.classList.add("invalid");
     noticeMessage.classList.remove("valid");
+    weatherButton.classList.add("weatherButton1");
     weatherButton.disabled = true;
   } else {
     noticeMessage.textContent = "Správný formát";
     noticeMessage.classList.remove("invalid");
     noticeMessage.classList.add("valid");
+    weatherButton.classList.add("weatherButton1");
     weatherButton.disabled = false;
   }
 
@@ -63,6 +67,7 @@ cityInput.addEventListener("input", () => {
 weatherButton.addEventListener("click", () => {
   loadWeather();
 });
+
 // Deklarace proměnných pro pozdější použití
 let itemSunrise;
 let itemSunset;
@@ -75,6 +80,9 @@ function loadWeather() {
     icons.classList.add("hidden");
   });
 
+  // Odstraníme margin-bottom
+  weatherButton.classList.remove("weatherButton1");
+
   // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
   const valueCity1 = cityInput.value.trim();
 
@@ -85,6 +93,9 @@ function loadWeather() {
   const cityName1 = parts[0];
   const countryCode1 = parts[1];
   const region1 = parts[2];
+
+  // Zobrazíme město c-code, kraj v políčku nad daty o počasí
+  cityCountryRegion.textContent = `${cityName1.trim()}, ${countryCode1.trim()}, ${region1.trim()}`;
 
   // dotaz na geolokaci města
   const geoUrl1 = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName1)}&count=10&language=cs`;
