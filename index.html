@@ -16,12 +16,19 @@
 
       <!-- obal-input pro zadání města + tlačítko -->
       <div class="inputCity">
-        <div class="mt"><div id="pattern">Vzor: Útěchov, CZ, Pardubický kraj</div><input list="citiesList" type="text" class="cityInput" id="citiesInput" placeholder="Město, kód země, kraj" /><div id="noticeMessage"></div><datalist id="citiesList"></datalist></div>
+        <div class="mt">
+          <div id="pattern">Útěchov, CZ, Pardubický kraj</div>
+          <input list="citiesList" type="text" class="cityInput" id="citiesInput" placeholder="Město, kód země, kraj" /><datalist
+            id="citiesList"
+          ></datalist>
+          <div id="noticeMessage"></div>
+        </div>
         <button id="weatherButton">Zobrazit počasí</button>
       </div>
 
       <!-- obalující element seznam ikon, stav počasí, popisky k počasí, datum,čas,aktuální stav o počasí-horní část-->
       <div class="list-icons-items">
+        <div class="cityName-countryCode-region"></div>
         <!-- obalující element jen datum,čas,aktuální stav o počasí-horní část -->
         <div class="date-time-current-weather">
           <!-- datum a čas kdy došlo k načtení dat o počasí -->
