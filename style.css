@@ -9,14 +9,15 @@
 body {
   font-family: poppins, cursive, sans-serif;
   position: relative;
+  display: flex;
 }
 
 /* obal */
-.container {
+.weather-app {
   padding-top: 15px;
-  max-width: 65%;
+  width: 65%;
   height: 100vh;
-  margin: auto;
+  margin: 0 auto;
   background-image: url(img/fototapety-zelena-priroda-krajina.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -33,7 +34,7 @@ h1 {
 }
 
 /* obal-input pro zadání města + tlačítko */
-.inputCity {
+.city-search-wrapper {
   display: flex;
   justify-content: center;
   align-items: end;
@@ -42,23 +43,23 @@ h1 {
   margin: 0 0 3px 0;
 }
 
-.cityInput {
-  height: 30px;
-}
-
-#pattern {
+#city-search__example {
   color: rgb(24, 44, 20);
   font-size: 62%;
   font-weight: bolder;
 }
 
-#noticeMessage {
+.city-search__input {
+  height: 30px;
+}
+
+#city-search-message {
   font-size: 60%;
   font-weight: bolder;
 }
 
 /* tlačítko */
-#weatherButton {
+#city-search-submit {
   border-radius: 5px 5px 5px 5px;
   background-color: rgba(15, 255, 195, 0.2);
   backdrop-filter: blur(6px) saturate(1) contrast(1);
@@ -98,14 +99,14 @@ h1 {
 }
 
 /* provedení animace border-hidden */
-#weatherButton:hover {
-  width: 15%;
+#city-search-submit:hover {
+  width: 130px;
   border-radius: 13px 0 13px 0;
   animation: borderSlowlyHidden 0.6s forwards;
 }
 
 /* levý-horní roh-nastavení */
-#weatherButton::before {
+#city-search-submit::before {
   content: "";
   position: absolute;
   top: -2px;
@@ -119,7 +120,7 @@ h1 {
 }
 
 /* pravý-dolní roh-nastavení */
-#weatherButton::after {
+#city-search-submit::after {
   content: "";
   position: absolute;
   bottom: -2px;
@@ -158,22 +159,22 @@ h1 {
 }
 
 /* provedení animace rohů po najetí myší */
-#weatherButton:hover::before {
+#city-search-submit:hover::before {
   animation: showCornerBefore 0.7s forwards;
 }
 
-#weatherButton:hover::after {
+#city-search-submit:hover::after {
   animation: showCornerAfter 0.7s forwards;
 }
 
 /* obalující element seznam ikon, stav počasí, popisky k počasí, datum,čas,aktuální stav o počasí-horní část */
-.list-icons-items {
+.weather-app__content {
   padding: 30px 0 10px 0;
   display: flex;
   flex-direction: column;
   gap: 35px;
   align-items: center;
-  margin: 13% 5% 0 20%;
+  margin: 20px 5% 0 20%;
   background-color: rgba(15, 255, 195, 0.2);
   backdrop-filter: blur(6px) saturate(1) contrast(1);
   box-shadow: 3px 3px 3px rgb(0, 0, 0, 0.089);
@@ -181,13 +182,19 @@ h1 {
   border-radius: 30% 0 0 0;
 }
 
-.cityName-countryCode-region {
+.location {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.location__name {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 0 0 60%;
-  width: 31%;
-  max-width: 200px;
+  margin: 0 10px 0 0;
+  width: 32%;
+  max-width: 350px;
   height: 30px;
   background-color: rgba(207, 207, 207, 0.6);
   box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
@@ -195,16 +202,18 @@ h1 {
 }
 
 /* obalující element jen datum,čas,aktuální stav o počasí-horní část */
-.date-time-current-weather {
+.current-weather {
   display: flex;
   justify-content: end;
   gap: 5%;
   width: 100%;
+  font-size: 90%;
 }
 /* datum a čas kdy došlo k načtení dat o počasí */
-.container-date,
-.container-timeGetOfData {
-  width: 150px;
+.current-weather__date-wrapper,
+.current-weather__time-wrapper {
+  width: 20%;
+  min-width: 90px;
   height: 30px;
   border-color: #e6e9ef #dfdddd #c5c4c4 #e6e9ef;
   background-color: rgba(207, 207, 207, 0.6);
@@ -215,43 +224,44 @@ h1 {
   margin-bottom: 5px;
   border-radius: 10px;
 }
+
 /* vždy jedna ikona s textem vpravo nahoře v šedém poli=značí vždy současné počasí např:ikona+zataženo */
-.current-weather {
-  margin: 0 10px 0 20px;
-  font-size: 15px;
+.weather-status {
+  margin: 0 10px 0 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(207, 207, 207, 0.6);
   box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
-  width: 150px;
+  width: 25%;
+  max-width: 300px;
   height: 30px;
   border-radius: 10px;
 }
 
 /* obalující element,rodič, ikony + text k načteným datům*/
-.only-icon-label {
+.weather-details {
   display: flex;
-  gap: 20px;
+  gap: 10px;
 }
 
 /* obal dítě ikony text */
-.icons {
+.weather-details__icons {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.icons-text {
+.weather-details__row {
   display: flex;
   gap: 10px;
 }
 
-.icons-label {
+.weather-details__label {
   padding-top: 8px;
 }
 /* obal načtená data o počasí */
-.current-weather-data {
+.weather-details__values {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -263,19 +273,19 @@ span {
 }
 
 /* jednotlivá načtená data o počasí */
-.item1,
-.item2,
-.item3,
-.item4,
-.item5,
-.item6,
-.item7,
-.item9 {
+.weather-details__value--sunrise,
+.weather-details__value--sunset,
+.weather-details__value--feels-like,
+.weather-details__value--temperature,
+.weather-details__value--rain,
+.weather-details__value--precipitation-7h,
+.weather-details__value--wind-speed,
+.weather-details__value--extra {
   padding-top: 5px;
 }
 
 /* ---třídy pro ukrývání a zobrazování elementů na stránce pomocí javasriptu--- */
-.hidden {
+.is-hidden {
   display: none;
 }
 
