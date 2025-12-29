@@ -1,2 +1,30 @@
 Stránky:
 https://honza58.github.io/Pocasi-API/
+
+Základní princip pojmenování CLASS a ID
+Jedna hlavní komponenta: weather-app
+Používám:
+- obyčejná pomlčka (lepší čitelnost)
+
+__ potomek
+
+-- varianta 
+
+---------------------------------------------
+Příklad:
+div class="weather-status__item--61 is-hidden"
+Rozbor:
+
+Vysvětlení významu:
+
+weather-status => název třídy => (slova oddělená -)
+
+__item => potomek
+
+--61 => varianta
+
+is-hidden => stav
+
+container / wrapper jen tam, kde to dává smysl
+
+ID jen tam, kde je JS logika (input, button, datalist)
