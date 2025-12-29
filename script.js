@@ -2,40 +2,39 @@
 
 // HTML prvky pro výpis dat
 let paragraphWeather = document.querySelector(".paragraphWeather");
-let item1 = document.querySelector(".item1");
-let item2 = document.querySelector(".item2");
-let item3 = document.querySelector(".item3");
-let item4 = document.querySelector(".item4");
-let item5 = document.querySelector(".item5");
-let item6 = document.querySelector(".item6");
-let item7 = document.querySelector(".item7");
-let timeGetOfData = document.querySelector(".timeGetOfData"); //čas měření
-let item9 = document.querySelector(".item9");
-let date = document.querySelector(".date");
-const weatherButton = document.getElementById("weatherButton");
-
-let dataList = document.getElementById("citiesList"); // seznam měst pro input
-let cityInput = document.querySelector(".cityInput"); // pole pro zadání města
-const noticeMessage = document.getElementById("noticeMessage");
+let weatherDetailsValueSunrise = document.querySelector(".weather-details__value--sunrise");
+let weatherDetailsValueSunset = document.querySelector(".weather-details__value--sunset");
+let weatherDetailsValuesFeelsLike = document.querySelector(".weather-details__value--feels-like");
+let weatherDetailsValuesTemperature = document.querySelector(".weather-details__value--temperature");
+let weatherDetailsValuesRain = document.querySelector(".weather-details__value--rain");
+let weatherDetailsValuesPrecipitation7h = document.querySelector(".weather-details__value--precipitation-7h");
+let weatherDetailsValuesWindSpeed = document.querySelector(".weather-details__value--wind-speed");
+let weatherDetailsTime = document.querySelector(".current-weather__time"); //čas měření
+let weatherDetailsValueExtra = document.querySelector(".weather-details__value--extra");
+let currentWeatherDate = document.querySelector(".current-weather__date");
+const citySearchSubmit = document.getElementById("city-search-submit");
+let citySearchList = document.getElementById("city-search-list"); // seznam měst pro input
+let citySearchInput = document.querySelector(".city-search__input"); // pole pro zadání města
+const citySearchMessage = document.getElementById("city-search-message");
 const regex = /^([^,]+),\s([A-Z]{2}),\s([^,])+\skraj$/;
-const cityCountryRegion = document.querySelector(".cityName-countryCode-region");
+const location__name = document.querySelector(".location__name");
 
 // Při psaní do inputu vyhledáme město, county_code, název kraje (od 2 znaků)
-cityInput.addEventListener("input", () => {
-  const query = cityInput.value.trim();
+citySearchInput.addEventListener("input", () => {
+  const query = citySearchInput.value.trim();
 
   if (!regex.test(query)) {
-    noticeMessage.textContent = "Neprávný formát";
-    noticeMessage.classList.add("invalid");
-    noticeMessage.classList.remove("valid");
-    weatherButton.classList.add("weatherButton1");
-    weatherButton.disabled = true;
+    citySearchMessage.textContent = "Neprávný formát";
+    citySearchMessage.classList.add("invalid");
+    citySearchMessage.classList.remove("valid");
+    citySearchSubmit.classList.add("weatherButton1");
+    citySearchSubmit.disabled = true;
   } else {
-    noticeMessage.textContent = "Správný formát";
-    noticeMessage.classList.remove("invalid");
-    noticeMessage.classList.add("valid");
-    weatherButton.classList.add("weatherButton1");
-    weatherButton.disabled = false;
+    citySearchMessage.textContent = "Správný formát";
+    citySearchMessage.classList.remove("invalid");
+    citySearchMessage.classList.add("valid");
+    citySearchSubmit.classList.add("weatherButton1");
+    citySearchSubmit.disabled = false;
   }
 
   if (query.length < 2) {
@@ -48,7 +47,7 @@ cityInput.addEventListener("input", () => {
       return response.json(); //surová odpověď se převádí na json objekt
     })
     .then((geoData) => {
-      dataList.innerHTML = "";
+      citySearchList.innerHTML = "";
       if (!geoData.results || geoData.results.length === 0) {
         return; // dokud podmínka splněna return ukončí funkci a kód dál nepokračuje
       }
@@ -58,13 +57,13 @@ cityInput.addEventListener("input", () => {
         const option = document.createElement("option");
 
         option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj`;
-        dataList.appendChild(option);
+        citySearchList.appendChild(option);
       });
     });
 });
 
 //  Po kliknutí na tlačítko načteme počasí
-weatherButton.addEventListener("click", () => {
+citySearchSubmit.addEventListener("click", () => {
   loadWeather();
 });
 
@@ -75,16 +74,16 @@ let itemSunset;
 // Funkce -  API načtení dat s open-meteo.com
 function loadWeather() {
   // schováme všechny ikony počasí
-  const allIcons = document.querySelectorAll("[class^='weather-icon-label-']");
+  const allIcons = document.querySelectorAll("[class^='weather-status_item--']");
   allIcons.forEach((icons) => {
-    icons.classList.add("hidden");
+    icons.classList.add("is-hidden");
   });
 
   // Odstraníme margin-bottom
-  weatherButton.classList.remove("weatherButton1");
+  // citySearchSubmit.classList.remove("weatherButton1");
 
   // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
-  const valueCity1 = cityInput.value.trim();
+  const valueCity1 = citySearchInput.value.trim();
 
   const parts = valueCity1.split(",").map((p) => {
     return p.trim();
@@ -95,7 +94,7 @@ function loadWeather() {
   const region1 = parts[2];
 
   // Zobrazíme město c-code, kraj v políčku nad daty o počasí
-  cityCountryRegion.textContent = `${cityName1.trim()}, ${countryCode1.trim()}, ${region1.trim()}`;
+  location__name.textContent = `${cityName1.trim()}, ${countryCode1.trim()}, ${region1.trim()}`;
 
   // dotaz na geolokaci města
   const geoUrl1 = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName1)}&count=10&language=cs`;
@@ -129,7 +128,7 @@ function loadWeather() {
       const { latitude, longitude } = result1;
 
       // dotaz na počasí podle souřadnic
-      const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
+      const urlWeather = `https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,rain,weather_code,apparent_temperature,precipitation_probability,precipitation,sunshine_duration&latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset,temperature_2m_mean&current=temperature_2m,weather_code,apparent_temperature,wind_speed_10m,rain#current_weather&minutely_15=weather_code`;
 
       return fetch(urlWeather);
     })
@@ -142,35 +141,36 @@ function loadWeather() {
     .then((data) => {
       // výpis dat na stránku
       itemSunrise = data.daily.sunrise[0];
-      item1.textContent = `${itemSunrise.split("T")[1]}`;
+      weatherDetailsValueSunrise.textContent = `${itemSunrise.split("T")[1]}`;
       itemSunset = data.daily.sunset[0];
-      item2.textContent = `${itemSunset.split("T")[1]}`;
-      item3.textContent = `${data.current.apparent_temperature}   C°`;
-      item4.textContent = `${data.current.temperature_2m}C°`;
-      item5.textContent = `${data.current.rain} mm`;
-      item6.textContent = `${data.hourly.precipitation_probability.slice(0, 7)}%`;
-      item7.textContent = `${data.current.wind_speed_10m} km/h`;
+      weatherDetailsValueSunset.textContent = `${itemSunset.split("T")[1]}`;
+      weatherDetailsValuesFeelsLike.textContent = `${data.current.apparent_temperature}   C°`;
+      weatherDetailsValuesTemperature.textContent = `${data.current.temperature_2m}C°`;
+      weatherDetailsValuesRain.textContent = `${data.current.rain} mm`;
+      weatherDetailsValuesPrecipitation7h.textContent = `${data.hourly.precipitation_probability.slice(0, 7)}%`;
+      weatherDetailsValuesWindSpeed.textContent = `${data.current.wind_speed_10m} km/h`;
 
       // Ćas
-      timeGetOfData.textContent = `${data.current.time.split("T")[1]}`;
+      weatherDetailsTime.textContent = `${data.current.time.split("T")[1]}`;
 
       // datum
       let [year, month, day] = data.daily.time[0].split("-");
-      date.textContent = `${day}. ${month}. ${year}`;
+      currentWeatherDate.textContent = `${day}. ${month}. ${year}`;
 
       // zobrazení aktuálního stavu počasí dle čísla kódu z API open-meteo.cz, např: jasno + ikona
-      item9.textContent = `${data.current.weather_code}`;
-      const specificCodeApi = Number(item9.textContent);
-      const displayWeather = document.querySelector(`.weather-icon-label-${specificCodeApi}`);
+      weatherDetailsValueExtra.textContent = `${data.current.weather_code}`;
+
+      const specificCodeApi = Number(weatherDetailsValueExtra.textContent);
+      const displayWeather = document.querySelector(`.weather-status_item--${specificCodeApi}`);
 
       // zobrazíme ikonu podle kódu počasí
       if (displayWeather) {
-        displayWeather.classList.remove("hidden");
-        item9.classList.add("hidden");
+        displayWeather.classList.remove("is-hidden");
+        weatherDetailsValueExtra.classList.add("is-hidden");
       }
     });
 
   // mažeme input a hlášku po kliknutí na tlačítko
-  cityInput.value = "";
-  noticeMessage.textContent = "";
+  citySearchInput.value = "";
+  citySearchMessage.textContent = "";
 }
