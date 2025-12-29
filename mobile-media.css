@@ -1,0 +1,66 @@
+@media (max-width: 360px) {
+  /* obal */
+  .weather-app {
+    width: 95%;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 180%;
+  }
+
+  .city-search-wrapper {
+    gap: 15px;
+  }
+
+  #city-search__example {
+    font-size: 55%;
+  }
+
+  .city-search__input {
+    min-width: 180px;
+    height: 25px;
+  }
+
+  #city-search-message {
+    font-size: 55%;
+  }
+
+  #city-search-submit {
+    height: 25px;
+    font-size: 0.6em;
+  }
+
+  .weather-app__content {
+    width: 95%;
+    margin: 20px auto;
+  }
+
+  .location__name {
+    font-size: 70%;
+    min-width: 190px;
+    margin: 0 17px 0 0;
+  }
+
+  .weather-status {
+    font-size: 70%;
+    width: 90%;
+    gap: 3%;
+  }
+
+  .current-weather__date-wrapper {
+    min-width: 70px;
+  }
+
+  .current-weather__time-wrapper {
+    min-width: 50px;
+  }
+
+  .weather-status {
+    min-width: 120px;
+    margin: 0;
+  }
+
+  .weather-details {
+    font-size: 90%;
+  }
+}
