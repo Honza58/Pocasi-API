@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mobile-media.css" />
+    <link rel="stylesheet" href="tablet-media.css" />
     <!-- link na knihovnu s ikonami počasí -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css" />
     <title>API-zkoušení</title>
@@ -18,10 +19,13 @@
       <!-- obal-input pro zadání města + tlačítko -->
       <div class="city-search-wrapper">
         <div class="city-search__inner">
-          <div id="city-search__example">Útěchov, CZ, Pardubický kraj</div>
-          <input list="city-search-list" type="text" class="city-search__input" id="city-search-input" placeholder="Město, kód země, kraj" /><datalist
-            id="city-search-list"
-          ></datalist>
+          <input
+            list="city-search-list"
+            type="text"
+            class="city-search__input"
+            id="city-search-input"
+            placeholder=" Město, kód země, kraj"
+          /><datalist id="city-search-list"></datalist>
           <div id="city-search-message"></div>
         </div>
         <button id="city-search-submit">Zobrazit počasí</button>
