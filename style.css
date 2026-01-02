@@ -37,7 +37,7 @@ h1 {
 .city-search-wrapper {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: center;
   gap: 30px;
   font-size: larger;
   margin: 0 0 3px 0;
@@ -51,6 +51,20 @@ h1 {
 
 .city-search__input {
   height: 30px;
+  width: 260px;
+  border: none;
+  padding-left: 5px;
+  border-radius: 5px;
+  background-color: rgba(15, 255, 195, 0.2);
+  backdrop-filter: blur(6px);
+}
+
+.city-search__input::placeholder {
+  color: black;
+}
+
+.city-search__input:focus {
+  outline: 2px solid rgb(21, 207, 161);
 }
 
 #city-search-message {
@@ -60,21 +74,22 @@ h1 {
 
 /* tlačítko */
 #city-search-submit {
-  border-radius: 5px 5px 5px 5px;
+  width: 110px;
+  height: 34px;
+  border-radius: 5px;
   background-color: rgba(15, 255, 195, 0.2);
   backdrop-filter: blur(6px) saturate(1) contrast(1);
   box-shadow: 3px 3px 3px rgb(0, 0, 0, 0.089);
   border: 2px solid rgb(21, 207, 161);
   font-size: 0.7em;
-  width: 110px;
-  height: 30px;
+
   transition: width 0.7s ease, font-size 0.3s ease, border-radius 0.7s ease;
   cursor: pointer;
 }
 
-.weatherButton1 {
+/* .weatherButton1 {
   margin-bottom: 17px;
-}
+} */
 
 /* tlačítko nastavení-animace border-hidden*/
 @keyframes borderSlowlyHidden {
@@ -193,9 +208,10 @@ h1 {
   justify-content: center;
   align-items: center;
   margin: 0 10px 0 0;
-  width: 32%;
-  max-width: 350px;
-  height: 30px;
+  padding: 5px;
+  width: fit-content;
+  min-width: 150px;
+  min-height: 35px;
   background-color: rgba(207, 207, 207, 0.6);
   box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
   border-radius: 10px;
@@ -212,9 +228,8 @@ h1 {
 /* datum a čas kdy došlo k načtení dat o počasí */
 .current-weather__date-wrapper,
 .current-weather__time-wrapper {
-  width: 20%;
-  min-width: 90px;
-  height: 30px;
+  width: fit-content;
+  height: 35px;
   border-color: #e6e9ef #dfdddd #c5c4c4 #e6e9ef;
   background-color: rgba(207, 207, 207, 0.6);
   box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
@@ -222,20 +237,22 @@ h1 {
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
+  padding: 5px;
   border-radius: 10px;
 }
 
 /* vždy jedna ikona s textem vpravo nahoře v šedém poli=značí vždy současné počasí např:ikona+zataženo */
 .weather-status {
-  margin: 0 10px 0 15px;
+  height: 35px;
+  width: fit-content;
+  min-width: 100px;
+  margin: 0 10px 0 0;
+  padding: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(207, 207, 207, 0.6);
   box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
-  width: 25%;
-  max-width: 300px;
-  height: 30px;
   border-radius: 10px;
 }
 
@@ -281,7 +298,7 @@ span {
 .weather-details__value--precipitation-7h,
 .weather-details__value--wind-speed,
 .weather-details__value--extra {
-  padding-top: 5px;
+  padding-top: 8px;
 }
 
 /* ---třídy pro ukrývání a zobrazování elementů na stránce pomocí javasriptu--- */

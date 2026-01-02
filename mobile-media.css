@@ -1,18 +1,20 @@
-@media (max-width: 360px) {
+@media (max-width: 480px) {
   /* obal */
   .weather-app {
-    width: 95%;
-    margin: 0 auto;
+    width: 100%;
   }
   h1 {
     font-size: 180%;
   }
 
   .city-search-wrapper {
-    gap: 15px;
+    display: grid;
+    justify-items: center;
+    gap: 10px;
   }
 
   #city-search__example {
+    text-align: center;
     font-size: 55%;
   }
 
@@ -33,34 +35,60 @@
   .weather-app__content {
     width: 95%;
     margin: 20px auto;
-  }
-
-  .location__name {
-    font-size: 70%;
-    min-width: 190px;
-    margin: 0 17px 0 0;
+    font-size: 76%;
   }
 
   .weather-status {
-    font-size: 70%;
-    width: 90%;
+    /* width: 90%; */
     gap: 3%;
   }
 
+  .current-weather {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-area: current-weather;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    grid-template-areas:
+      "date time"
+      "current-weather current-weather";
+    max-width: 250px;
+  }
+
   .current-weather__date-wrapper {
-    min-width: 70px;
+    grid-area: date;
+    min-width: 60px;
+    font-size: 90%;
+    margin-bottom: 0;
   }
 
   .current-weather__time-wrapper {
-    min-width: 50px;
+    grid-area: time;
+    min-width: 60px;
+    margin-bottom: 0;
   }
 
   .weather-status {
-    min-width: 120px;
+    grid-area: current-weather;
+  }
+
+  .weather-status {
+    max-width: 190px;
     margin: 0;
   }
 
+  .location {
+    display: flex;
+    justify-content: center;
+  }
+
+  .location__name {
+    min-width: 190px;
+    margin: 0 auto;
+  }
   .weather-details {
-    font-size: 90%;
+    font-size: 95%;
   }
 }
