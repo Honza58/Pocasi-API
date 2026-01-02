@@ -14,7 +14,7 @@ let weatherDetailsValueExtra = document.querySelector(".weather-details__value--
 let currentWeatherDate = document.querySelector(".current-weather__date");
 const citySearchSubmit = document.getElementById("city-search-submit");
 let citySearchList = document.getElementById("city-search-list"); // seznam měst pro input
-let citySearchInput = document.querySelector(".city-search__input"); // pole pro zadání města
+let citySearchInput = document.getElementById("city-search-input"); // pole pro zadání města
 const citySearchMessage = document.getElementById("city-search-message");
 const regex = /^([^,]+),\s([A-Z]{2}),\s([^,])+\skraj$/;
 const location__name = document.querySelector(".location__name");
@@ -27,13 +27,11 @@ citySearchInput.addEventListener("input", () => {
     citySearchMessage.textContent = "Neprávný formát";
     citySearchMessage.classList.add("invalid");
     citySearchMessage.classList.remove("valid");
-    citySearchSubmit.classList.add("weatherButton1");
     citySearchSubmit.disabled = true;
   } else {
     citySearchMessage.textContent = "Správný formát";
     citySearchMessage.classList.remove("invalid");
     citySearchMessage.classList.add("valid");
-    citySearchSubmit.classList.add("weatherButton1");
     citySearchSubmit.disabled = false;
   }
 
