@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>weather forecast</title>
+  </head>
+  <body data-mode="7-day-forecast">
+    <div class="weather-app">
+      <h1>Předpověď počasí</h1>
+      <div class="city-search-wrapper">
+        <div class="city-search__inner">
+          <input list="city-search-list" type="text" class="city-search__input" id="city-search-input" placeholder=" Město, kód země, kraj" />
+          <datalist id="city-search-list"></datalist>
+          <div id="city-search-message"></div>
+        </div>
+        <button id="city-search-submit">Zobrazit předpověď</button>
+      </div>
+
+      <div class="weather-forecast__location"><div class="location__name"></div></div>
+
+      <div class="weather-app__content--weather-forecast">
+        <!-- Labels -->
+
+        <!-- Days of the week -->
+        <div class="label"></div>
+        <div id="weather-forecast__monday"></div>
+        <div id="weather-forecast__tuesday"></div>
+        <div id="weather-forecast__wednesday"></div>
+        <div id="weather-forecast__thursday"></div>
+        <div id="weather-forecast__friday"></div>
+        <div id="weather-forecast__saturday"></div>
+        <div id="weather-forecast__sunday"></div>
+        <!-- Date -->
+        <div class="label"></div>
+        <div id="weather-forecast__date--monday"></div>
+        <div id="weather-forecast__date--tuesday"></div>
+        <div id="weather-forecast__date--wednesday"></div>
+        <div id="weather-forecast__date--thursday"></div>
+        <div id="weather-forecast__date--friday"></div>
+        <div id="weather-forecast__date--saturday"></div>
+        <div id="weather-forecast__date--sunday"></div>
+        <!-- ikony počasí -->
+        <div class="label"></div>
+        <div id="weather-forecast__icon--monday" class="cell wf-icons"></div>
+        <div id="weather-forecast__icon--tuesday" class="cell wf-icons"></div>
+        <div id="weather-forecast__icon--wednesday" class="cell wf-icons"></div>
+        <div id="weather-forecast__icon--thursday" class="cell wf-icons"></div>
+        <div id="weather-forecast__icon--friday" class="cell wf-icons"></div>
+        <div id="weather-forecast__icon--saturday" class="cell wf-icons"></div>
+        <div id="weather-forecast__icon--sunday" class="cell wf-icons"></div>
+        <!-- teplota min -->
+        <div class="label">Temperature min:</div>
+        <div id="weather-forecast__temperature-min--monday"></div>
+        <div id="weather-forecast__temperature-min--tuesday"></div>
+        <div id="weather-forecast__temperature-min--wednesday"></div>
+        <div id="weather-forecast__temperature-min--thursday"></div>
+        <div id="weather-forecast__temperature-min--friday"></div>
+        <div id="weather-forecast__temperature-min--saturday"></div>
+        <div id="weather-forecast__temperature-min--sunday"></div>
+        <!-- teplota max -->
+        <div class="label">Temperature max:</div>
+        <div id="weather-forecast__temperature-max--monday"></div>
+        <div id="weather-forecast__temperature-max--tuesday"></div>
+        <div id="weather-forecast__temperature-max--wednesday"></div>
+        <div id="weather-forecast__temperature-max--thursday"></div>
+        <div id="weather-forecast__temperature-max--friday"></div>
+        <div id="weather-forecast__temperature-max--saturday"></div>
+        <div id="weather-forecast__temperature-max--sunday"></div>
+        <!-- celkové množství srážek za den -->
+        <div class="label">Precipitation sum:</div>
+        <div id="weather-forecast__precipitation-sum--monday"></div>
+        <div id="weather-forecast__precipitation-sum--tuesday"></div>
+        <div id="weather-forecast__precipitation-sum--wednesday"></div>
+        <div id="weather-forecast__precipitation-sum--thursday"></div>
+        <div id="weather-forecast__precipitation-sum--friday"></div>
+        <div id="weather-forecast__precipitation-sum--saturday"></div>
+        <div id="weather-forecast__precipitation-sum--sunday"></div>
+        <!-- rychlost větru -->
+        <div class="label">Wind speed:</div>
+        <div id="weather-forecast__wind--monday"></div>
+        <div id="weather-forecast__wind--tuesday"></div>
+        <div id="weather-forecast__wind--wednesday"></div>
+        <div id="weather-forecast__wind--thursday"></div>
+        <div id="weather-forecast__wind--friday"></div>
+        <div id="weather-forecast__wind--saturday"></div>
+        <div id="weather-forecast__wind--sunday"></div>
+        <!-- východ slunce -->
+        <div class="label">Sunrise:</div>
+        <div id="weather-forecast__sunrise--monday"></div>
+        <div id="weather-forecast__sunrise--tuesday"></div>
+        <div id="weather-forecast__sunrise--wednesday"></div>
+        <div id="weather-forecast__sunrise--thursday"></div>
+        <div id="weather-forecast__sunrise--friday"></div>
+        <div id="weather-forecast__sunrise--saturday"></div>
+        <div id="weather-forecast__sunrise--sunday"></div>
+        <!-- západ slunce -->
+        <div class="label">Sunset:</div>
+        <div id="weather-forecast__sunset--monday"></div>
+        <div id="weather-forecast__sunset--tuesday"></div>
+        <div id="weather-forecast__sunset--wednesday"></div>
+        <div id="weather-forecast__sunset--thursday"></div>
+        <div id="weather-forecast__sunset--friday"></div>
+        <div id="weather-forecast__sunset--saturday"></div>
+        <div id="weather-forecast__sunset--sunday"></div>
+      </div>
+      <a href="current.html" target="_blank" rel="noopener">current.html</a>
+
+      <div class="displayed-icon">
+          
+      
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
