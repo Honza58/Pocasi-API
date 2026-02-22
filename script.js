@@ -1,6 +1,8 @@
-//API počasí - načtení dat a zobrazení na stránce
+// vytáhneme animované ikony ze souboru
+import { currentWeatherIcons } from "./weatherIcons.js";
 
-// HTML prvky pro výpis dat
+//API počasí - načtení dat a zobrazení na stránce
+// HTML prvky pro výpis current-weather
 let paragraphWeather = document.querySelector(".paragraphWeather");
 let weatherDetailsValueSunrise = document.querySelector(".weather-details__value--sunrise");
 let weatherDetailsValueSunset = document.querySelector(".weather-details__value--sunset");
@@ -20,6 +22,7 @@ const regex = /^([^,]+),\s([A-Z]{2}),\s([^,])+\skraj$/;
 const location__name = document.querySelector(".location__name");
 
 // Při psaní do inputu vyhledáme město, county_code, název kraje (od 2 znaků)
+// Společný kód pro obě stránky, current a weather-forecast
 citySearchInput.addEventListener("input", () => {
   const query = citySearchInput.value.trim();
 
@@ -47,13 +50,12 @@ citySearchInput.addEventListener("input", () => {
     .then((geoData) => {
       citySearchList.innerHTML = "";
       if (!geoData.results || geoData.results.length === 0) {
-        return; // dokud podmínka splněna return ukončí funkci a kód dál nepokračuje
+        return; // pokud podmínka splněna return ukončí funkci a kód dál nepokračuje
       }
 
       // naplníme seznam měst
       geoData.results.forEach((cities) => {
         const option = document.createElement("option");
-
         option.value = `${cities.name}, ${cities.country_code}, ${cities.admin1} kraj`;
         citySearchList.appendChild(option);
       });
@@ -62,23 +64,21 @@ citySearchInput.addEventListener("input", () => {
 
 //  Po kliknutí na tlačítko načteme počasí
 citySearchSubmit.addEventListener("click", () => {
-  loadWeather();
+  const mode = document.body.dataset.mode;
+  if (mode === "current-weather") {
+    currentWeather(mode);
+  } else if (mode === "7-day-forecast") {
+    sevenDayForecast(mode);
+  }
 });
 
-// Deklarace proměnných pro pozdější použití
-let itemSunrise;
-let itemSunset;
-
-// Funkce -  API načtení dat s open-meteo.com
-function loadWeather() {
+// Funkce - API načtení dat s open-meteo.com - současné počasí
+function currentWeather() {
   // schováme všechny ikony počasí
   const allIcons = document.querySelectorAll("[class^='weather-status_item--']");
   allIcons.forEach((icons) => {
     icons.classList.add("is-hidden");
   });
-
-  // Odstraníme margin-bottom
-  // citySearchSubmit.classList.remove("weatherButton1");
 
   // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
   const valueCity1 = citySearchInput.value.trim();
@@ -91,7 +91,7 @@ function loadWeather() {
   const countryCode1 = parts[1];
   const region1 = parts[2];
 
-  // Zobrazíme město c-code, kraj v políčku nad daty o počasí
+  // Zobrazíme město, c-code, kraj v políčku nad daty o počasí
   location__name.textContent = `${cityName1.trim()}, ${countryCode1.trim()}, ${region1.trim()}`;
 
   // dotaz na geolokaci města
@@ -104,7 +104,7 @@ function loadWeather() {
     .then((geoResponse1) => {
       return geoResponse1.json();
     })
-    // pomocí geoData sestavíme požadavek na předpověď počasí
+    // pomocí geoData1 sestavíme požadavek na předpověď počasí
     .then((geoData1) => {
       if (!geoData1.results) {
         return;
@@ -122,7 +122,8 @@ function loadWeather() {
       });
       // zastavujeme kód pokud je result false
       if (!result1) return;
-      // přeneseme do požadavku zeměpisnou šířku a délku
+
+      // načteme si  zeměpisnou šířku a délku
       const { latitude, longitude } = result1;
 
       // dotaz na počasí podle souřadnic
@@ -137,15 +138,21 @@ function loadWeather() {
     })
     //konkrétní vypársovaná data o počasí
     .then((data) => {
+      const xxx = data.current;
+      console.log("sočasná data", xxx);
+      
+      // Deklarace proměnných pro pozdější použití
+      let itemSunrise;
+      let itemSunset;
       // výpis dat na stránku
       itemSunrise = data.daily.sunrise[0];
       weatherDetailsValueSunrise.textContent = `${itemSunrise.split("T")[1]}`;
       itemSunset = data.daily.sunset[0];
       weatherDetailsValueSunset.textContent = `${itemSunset.split("T")[1]}`;
-      weatherDetailsValuesFeelsLike.textContent = `${data.current.apparent_temperature}   C°`;
-      weatherDetailsValuesTemperature.textContent = `${data.current.temperature_2m}C°`;
+      weatherDetailsValuesFeelsLike.textContent = `${data.current.apparent_temperature}  C°`;
+      weatherDetailsValuesTemperature.textContent = `${data.current.temperature_2m} C°`;
       weatherDetailsValuesRain.textContent = `${data.current.rain} mm`;
-      weatherDetailsValuesPrecipitation7h.textContent = `${data.hourly.precipitation_probability.slice(0, 7)}%`;
+      weatherDetailsValuesPrecipitation7h.textContent = `${data.hourly.precipitation_probability.slice(0, 7).join(" | ")} %`;
       weatherDetailsValuesWindSpeed.textContent = `${data.current.wind_speed_10m} km/h`;
 
       // Ćas
@@ -168,6 +175,272 @@ function loadWeather() {
       }
     });
 
+  // mažeme input a hlášku po kliknutí na tlačítko
+  citySearchInput.value = "";
+  citySearchMessage.textContent = "";
+}
+
+// stránka - weather-forecast
+
+// days of week
+const weatherForecastMonday = document.getElementById("weather-forecast__monday");
+const weatherForecastTuesday = document.getElementById("weather-forecast__tuesday");
+const weatherForecastWednesday = document.getElementById("weather-forecast__wednesday");
+const weatherForecastThursday = document.getElementById("weather-forecast__thursday");
+const weatherForecastFriday = document.getElementById("weather-forecast__friday");
+const weatherForecastSaturday = document.getElementById("weather-forecast__saturday");
+const weatherForecastSunday = document.getElementById("weather-forecast__sunday");
+// date
+const weatherforecastDateMonday = document.getElementById("weather-forecast__date--monday");
+const weatherforecastDateTuesday = document.getElementById("weather-forecast__date--tuesday");
+const weatherforecastDateWednesday = document.getElementById("weather-forecast__date--wednesday");
+const weatherforecastDateThursday = document.getElementById("weather-forecast__date--thursday");
+const weatherforecastDateFriday = document.getElementById("weather-forecast__date--friday");
+const weatherforecastDateSaturday = document.getElementById("weather-forecast__date--saturday");
+const weatherforecastDateSunday = document.getElementById("weather-forecast__date--sunday");
+
+//Icons
+const weatherForecastIconMonday = document.getElementById("weather-forecast__icon--monday");
+const weatherForecastIconTuesday = document.getElementById("weather-forecast__icon--tuesday");
+const weatherForecastIconWedenesday = document.getElementById("weather-forecast__icon--wednesday");
+const weatherForecastIconThursday = document.getElementById("weather-forecast__icon--thursday");
+const weatherForecastIconFriday = document.getElementById("weather-forecast__icon--friday");
+const weatherForecastIconSaturday = document.getElementById("weather-forecast__icon--saturday");
+const weatherForecastIconSunday = document.getElementById("weather-forecast__icon--sunday");
+
+// teplota min
+const weatherForecastTemperatureMinMonday = document.getElementById("weather-forecast__temperature-min--monday");
+const weatherForecastTemperatureMinTuesday = document.getElementById("weather-forecast__temperature-min--tuesday");
+const weatherForecastTemperatureMinWednesday = document.getElementById("weather-forecast__temperature-min--wednesday");
+const weatherForecastTemperatureMinThursday = document.getElementById("weather-forecast__temperature-min--thursday");
+const weatherForecastTemperatureMinFriday = document.getElementById("weather-forecast__temperature-min--friday");
+const weatherForecastTemperatureMinSaturday = document.getElementById("weather-forecast__temperature-min--saturday");
+const weatherForecastTemperatureMinSunday = document.getElementById("weather-forecast__temperature-min--sunday");
+
+// teplota max
+const weatherForecastTemperatureMaxMonday = document.getElementById("weather-forecast__temperature-max--monday");
+const weatherForecastTemperatureMaxTuesday = document.getElementById("weather-forecast__temperature-max--tuesday");
+const weatherForecastTemperatureMaxWednesday = document.getElementById("weather-forecast__temperature-max--wednesday");
+const weatherForecastTemperatureMaxThursday = document.getElementById("weather-forecast__temperature-max--thursday");
+const weatherForecastTemperatureMaxFriday = document.getElementById("weather-forecast__temperature-max--friday");
+const weatherForecastTemperatureMaxSaturday = document.getElementById("weather-forecast__temperature-max--saturday");
+const weatherForecastTemperatureMaxSunday = document.getElementById("weather-forecast__temperature-max--sunday");
+
+// celkové množství srážek za den
+const weatherForecastPrecipitationSumMonday = document.getElementById("weather-forecast__precipitation-sum--monday");
+const weatherForecastPrecipitationSumTuesday = document.getElementById("weather-forecast__precipitation-sum--tuesday");
+const weatherForecastPrecipitationSumWednesday = document.getElementById("weather-forecast__precipitation-sum--wednesday");
+const weatherForecastPrecipitationSumThursday = document.getElementById("weather-forecast__precipitation-sum--thursday");
+const weatherForecastPrecipitationSumFriday = document.getElementById("weather-forecast__precipitation-sum--friday");
+const weatherForecastPrecipitationSumSaturday = document.getElementById("weather-forecast__precipitation-sum--saturday");
+const weatherForecastPrecipitationSumSunday = document.getElementById("weather-forecast__precipitation-sum--sunday");
+
+// wind - speed
+const weatherForecastWindSpeedMonday = document.getElementById("weather-forecast__wind--monday");
+const weatherForecastWindSpeedTuesday = document.getElementById("weather-forecast__wind--tuesday");
+const weatherForecastWindSpeedWednesday = document.getElementById("weather-forecast__wind--wednesday");
+const weatherForecastWindSpeedThursday = document.getElementById("weather-forecast__wind--thursday");
+const weatherForecastWindSpeedFriday = document.getElementById("weather-forecast__wind--friday");
+const weatherForecastWindSpeedSaturday = document.getElementById("weather-forecast__wind--saturday");
+const weatherForecastWindSpeedSunday = document.getElementById("weather-forecast__wind--sunday");
+
+// sunrise
+const weatherForecastSunriseMonday = document.getElementById("weather-forecast__sunrise--monday");
+const weatherForecastSunriseTuesday = document.getElementById("weather-forecast__sunrise--tuesday");
+const weatherForecastSunriseWednesday = document.getElementById("weather-forecast__sunrise--wednesday");
+const weatherForecastSunriseThursday = document.getElementById("weather-forecast__sunrise--thursday");
+const weatherForecastSunriseFriday = document.getElementById("weather-forecast__sunrise--friday");
+const weatherForecastSunriseSaturday = document.getElementById("weather-forecast__sunrise--saturday");
+const weatherForecastSunriseSunday = document.getElementById("weather-forecast__sunrise--sunday");
+
+// sunset
+const weatherForecastSunsetMonday = document.getElementById("weather-forecast__sunset--monday");
+const weatherForecastSunsetTuesday = document.getElementById("weather-forecast__sunset--tuesday");
+const weatherForecastSunsetWednesday = document.getElementById("weather-forecast__sunset--wednesday");
+const weatherForecastSunsetThursday = document.getElementById("weather-forecast__sunset--thursday");
+const weatherForecastSunsetFriday = document.getElementById("weather-forecast__sunset--friday");
+const weatherForecastSunsetSaturday = document.getElementById("weather-forecast__sunset--saturday");
+const weatherForecastSunsetSunday = document.getElementById("weather-forecast__sunset--sunday");
+
+// Funkce - načteme data s open-meteo.com - předpověď počasí na 7 dní
+function sevenDayForecast() {
+  // vezmeme název města z inputu např: Útěchov, CZ, Pardubický kraj
+  const valueCityForecast = citySearchInput.value.trim();
+  const partsForecast = valueCityForecast.split(",").map((p) => {
+    return p.trim();
+  });
+
+  const cityNameForecast = partsForecast[0];
+  const countryCodeForecast = partsForecast[1];
+  const regionForecast = partsForecast[2];
+
+  // Zobrazíme město, c-code, kraj v políčku nad daty o počasí
+  location__name.textContent = `${cityNameForecast.trim()}, ${countryCodeForecast.trim()}, ${regionForecast.trim()}`;
+
+  // dotaz na geolokaci města
+  const geoUrlForecast = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityNameForecast)}&count=10&language=cs`;
+
+  fetch(geoUrlForecast)
+    .then((geoResponseForecast) => {
+      return geoResponseForecast.json();
+    })
+    .then((geoDataForecast) => {
+      if (!geoDataForecast.results) {
+        return;
+      }
+
+      // vymažeme slovo kraj
+      const cleanRegionForecast = regionForecast.replace(" kraj", "");
+
+      //vybereme město dle country_code a kraje
+      const resultForecast = geoDataForecast.results.find((r) => {
+        if (r.country_code === countryCodeForecast && r.admin1 === cleanRegionForecast) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      // zastavujeme kód pokud je result false
+      if (!resultForecast) return;
+
+      // načteme si  zeměpisnou šířku a délku
+      const { latitude, longitude } = resultForecast;
+
+      const urlWeatherForecast = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=sunrise,sunset,weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,precipitation_sum&hourly=precipitation_probability&current=weather_code`;
+
+      return fetch(urlWeatherForecast);
+    })
+
+    .then((weatherForecastResponse) => {
+      return weatherForecastResponse.json();
+    })
+    .then((weatherForecastData) => {
+      const dailyResult = weatherForecastData.daily;
+      console.log(dailyResult);
+
+      dailyResult.time.forEach((day, index) => {
+        const todayIndex = (new Date().getDay() + 6) % 7;
+        console.log("todayIndex", todayIndex);
+
+        const htmlIndex = (todayIndex + index) % 7;
+        console.log("htmlIndex", htmlIndex);
+
+        const dayNames = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "Neděle"];
+
+        let dayNameElements = [
+          weatherForecastMonday,
+          weatherForecastTuesday,
+          weatherForecastWednesday,
+          weatherForecastThursday,
+          weatherForecastFriday,
+          weatherForecastSaturday,
+          weatherForecastSunday,
+        ];
+        dayNameElements[htmlIndex].textContent = dayNames[(todayIndex + index) % 7];
+        console.log(dayNames[(todayIndex + index) % 7]);
+
+        let date = [
+          weatherforecastDateMonday,
+          weatherforecastDateTuesday,
+          weatherforecastDateWednesday,
+          weatherforecastDateThursday,
+          weatherforecastDateFriday,
+          weatherforecastDateSaturday,
+          weatherforecastDateSunday,
+        ];
+        date[htmlIndex].textContent = dailyResult.time[index].split("-").reverse().join(".");
+
+        // icons
+
+        let iconsDays = [
+          weatherForecastIconMonday,
+          weatherForecastIconTuesday,
+          weatherForecastIconWedenesday,
+          weatherForecastIconThursday,
+          weatherForecastIconFriday,
+          weatherForecastIconSaturday,
+          weatherForecastIconSunday,
+        ];
+        // iconsDays[htmlIndex].innerHTML = dailyResult.weather_code[index] //jen číselný kód počasí
+        const forecastWeatherCode = dailyResult.weather_code[index];
+        console.log(forecastWeatherCode);
+        
+        const iconContainer = iconsDays[htmlIndex];
+        iconContainer.innerHTML = "";
+        const weatherForDay = currentWeatherIcons[forecastWeatherCode];
+        if (weatherForDay && weatherForDay.icon) {
+          iconContainer.innerHTML = weatherForDay.icon;
+        } else {
+          iconContainer.textContent = forecastWeatherCode;
+        }
+
+        let tempMinDays = [
+          weatherForecastTemperatureMinMonday,
+          weatherForecastTemperatureMinTuesday,
+          weatherForecastTemperatureMinWednesday,
+          weatherForecastTemperatureMinThursday,
+          weatherForecastTemperatureMinFriday,
+          weatherForecastTemperatureMinSaturday,
+          weatherForecastTemperatureMinSunday,
+        ];
+        tempMinDays[htmlIndex].textContent = dailyResult.temperature_2m_min[index];
+
+        let tempMaxDays = [
+          weatherForecastTemperatureMaxMonday,
+          weatherForecastTemperatureMaxTuesday,
+          weatherForecastTemperatureMaxWednesday,
+          weatherForecastTemperatureMaxThursday,
+          weatherForecastTemperatureMaxFriday,
+          weatherForecastTemperatureMaxSaturday,
+          weatherForecastTemperatureMaxSunday,
+        ];
+        tempMaxDays[htmlIndex].textContent = dailyResult.temperature_2m_max[index];
+
+        let precSum = [
+          weatherForecastPrecipitationSumMonday,
+          weatherForecastPrecipitationSumTuesday,
+          weatherForecastPrecipitationSumWednesday,
+          weatherForecastPrecipitationSumThursday,
+          weatherForecastPrecipitationSumFriday,
+          weatherForecastPrecipitationSumSaturday,
+          weatherForecastPrecipitationSumSunday,
+        ];
+        precSum[htmlIndex].textContent = dailyResult.precipitation_sum[index];
+
+        let windSpeed = [
+          weatherForecastWindSpeedMonday,
+          weatherForecastWindSpeedTuesday,
+          weatherForecastWindSpeedWednesday,
+          weatherForecastWindSpeedThursday,
+          weatherForecastWindSpeedFriday,
+          weatherForecastWindSpeedSaturday,
+          weatherForecastWindSpeedSunday,
+        ];
+        windSpeed[htmlIndex].textContent = dailyResult.wind_speed_10m_max[index];
+
+        let sunrise = [
+          weatherForecastSunriseMonday,
+          weatherForecastSunriseTuesday,
+          weatherForecastSunriseWednesday,
+          weatherForecastSunriseThursday,
+          weatherForecastSunriseFriday,
+          weatherForecastSunriseSaturday,
+          weatherForecastSunriseSunday,
+        ];
+        sunrise[htmlIndex].textContent = dailyResult.sunrise[index].split("T")[1];
+
+        let sunset = [
+          weatherForecastSunsetMonday,
+          weatherForecastSunsetTuesday,
+          weatherForecastSunsetWednesday,
+          weatherForecastSunsetThursday,
+          weatherForecastSunsetFriday,
+          weatherForecastSunsetSaturday,
+          weatherForecastSunsetSunday,
+        ];
+        sunset[htmlIndex].textContent = dailyResult.sunset[index].split("T")[1];
+      });
+    });
   // mažeme input a hlášku po kliknutí na tlačítko
   citySearchInput.value = "";
   citySearchMessage.textContent = "";
