@@ -73,7 +73,7 @@ h1 {
 }
 
 /* tlačítko */
-#city-search_submit {
+#city-search__submit {
   width: 110px;
   height: 34px;
   border-radius: 5px;
@@ -114,14 +114,14 @@ h1 {
 }
 
 /* provedení animace border-hidden */
-#city-search_submit:hover {
+#city-search__submit:hover {
   width: 130px;
   border-radius: 13px 0 13px 0;
   animation: borderSlowlyHidden 0.6s forwards;
 }
 
 /* levý-horní roh-nastavení */
-#city-search_submit::before {
+#city-search__submit::before {
   content: "";
   position: absolute;
   top: -2px;
@@ -135,7 +135,7 @@ h1 {
 }
 
 /* pravý-dolní roh-nastavení */
-#city-search_submit::after {
+#city-search__submit::after {
   content: "";
   position: absolute;
   bottom: -2px;
@@ -174,11 +174,11 @@ h1 {
 }
 
 /* provedení animace rohů po najetí myší */
-#city-search_submit:hover::before {
+#city-search__submit:hover::before {
   animation: showCornerBefore 0.7s forwards;
 }
 
-#city-search_submit:hover::after {
+#city-search__submit:hover::after {
   animation: showCornerAfter 0.7s forwards;
 }
 
