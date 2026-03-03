@@ -18,68 +18,76 @@ export const currentWeatherIcons = {
   1: {
     text: "Převážně jasno",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-	<defs>
-		<clipPath id="a">
-			<rect y="7.5" width="64" height="32" fill="none"/>
-		</clipPath>
+  <defs>
+    <clipPath id="mainly-clear-a">
+      <rect y="7.5" width="64" height="32" fill="none"/>
+    </clipPath>
 
-		<!-- Slunce gradient -->
-		<linearGradient id="b" x1="26.75" y1="29.91" x2="37.25" y2="48.09" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#fbbf24"/>
-			<stop offset="0.45" stop-color="#fbbf24"/>
-			<stop offset="1" stop-color="#f59e0b"/>
-		</linearGradient>
+    <!-- Menší slunce gradient -->
+    <linearGradient id="mainly-clear-b"
+      x1="16.5" y1="19.67"
+      x2="21.5" y2="28.33"
+      gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="0.45" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
 
-		<!-- Mrak gradient -->
-		<linearGradient id="c" x1="20" y1="42" x2="44" y2="42" gradientUnits="userSpaceOnUse">
-			<stop offset="0" stop-color="#ffffff"/>
-			<stop offset="0.45" stop-color="#ffffff"/>
-			<stop offset="1" stop-color="#ffffff"/>
-		</linearGradient>
-	</defs>
+    <!-- Mrak gradient (beze změny) -->
+    <linearGradient id="mainly-clear-c"
+      x1="20" y1="42"
+      x2="44" y2="42"
+      gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
 
-	<!-- Slunce -->
-	<g clip-path="url(#a)">
-		<circle cx="30" cy="30" r="10.5"
-			stroke="#f8af18"
-			stroke-miterlimit="10"
-			stroke-width="0.5"
-			fill="url(#b)"/>
+  <!-- Menší slunce -->
+  <g clip-path="url(#mainly-clear-a)">
+    <circle cx="19" cy="24" r="5"
+      stroke="#f8af18"
+      stroke-miterlimit="10"
+      stroke-width="0.5"
+      fill="url(#mainly-clear-b)"/>
 
-		<path d="M30,14V8m0,44V46M42,18l4-4M14,46l4-4m0-24-4-4M46,46l-4-4M14,30H8m44,0H46"
-			fill="none"
-			stroke="#fbbf24"
-			stroke-linecap="round"
-			stroke-miterlimit="10"
-			stroke-width="3">
-			<animateTransform
-				attributeName="transform"
-				type="rotate"
-				values="0 30 30; 360 30 30"
-				dur="45s"
-				repeatCount="indefinite"/>
-		</path>
-	</g>
+    <path
+      d="M19,15.67V12.5m0,23V32.33m5.89-14.22,2.24-2.24M10.87,32.13l2.24-2.24m0-11.78-2.24-2.24M27.13,32.13l-2.24-2.24M7.5,24h3.17M30.5,24H27.33"
+      fill="none"
+      stroke="#fbbf24"
+      stroke-linecap="round"
+      stroke-miterlimit="10"
+      stroke-width="2">
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="0 19 24; 360 19 24"
+        dur="45s"
+        repeatCount="indefinite"/>
+    </path>
+  </g>
 
-	<!-- Malý mráček -->
-	<g>
-		<path d="M24 42
-				 C22 42, 20 40, 20 38
-				 C20 36, 22 34, 24 34
-				 C25 31, 28 30, 30 32
-				 C31 31, 33 31, 34 33
-				 C36 33, 38 35, 38 37
-				 C38 40, 36 42, 33 42 Z"
-			fill="url(#c)">
-			<animateTransform
-				attributeName="transform"
-				type="translate"
-				values="-2 0; 2 0; -2 0"
-				dur="6s"
-				repeatCount="indefinite"/>
-		</path>
-	</g>
-</svg> `,
+  <!-- Malý mráček (beze změny) -->
+  <g>
+    <path
+      d="M24 42
+         C22 42, 20 40, 20 38
+         C20 36, 22 34, 24 34
+         C25 31, 28 30, 30 32
+         C31 31, 33 31, 34 33
+         C36 33, 38 35, 38 37
+         C38 40, 36 42, 33 42 Z"
+      fill="url(#mainly-clear-c)">
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="-2 0; 2 0; -2 0"
+        dur="6s"
+        repeatCount="indefinite"/>
+    </path>
+  </g>
+</svg>`,
   },
   2: {
     text: "Polojasno",
@@ -120,7 +128,7 @@ export const currentWeatherIcons = {
     text: "Zataženo",
     icon: ` <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
                 <defs>
-                  <linearGradient id="a" x1="22.56" y1="21.96" x2="39.2" y2="50.8" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="overcast-a" x1="22.56" y1="21.96" x2="39.2" y2="50.8" gradientUnits="userSpaceOnUse">
                     <stop offset="0" stop-color="#f3f7fe" />
                     <stop offset="0.45" stop-color="#f3f7fe" />
                     <stop offset="1" stop-color="#deeafb" />
@@ -131,7 +139,7 @@ export const currentWeatherIcons = {
                   stroke="#e6effc"
                   stroke-miterlimit="10"
                   stroke-width="0.5"
-                  fill="url(#a)"
+                  fill="url(#overcast-a)"
                 >
                   <animateTransform attributeName="transform" type="translate" values="-3 0; 3 0; -3 0" dur="7s" repeatCount="indefinite" />
                 </path>
@@ -1413,8 +1421,8 @@ export const currentWeatherIcons = {
     text: "Slabé dešťové přeháňky",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <!-- SUN -->
-    <linearGradient id="sunGrad" x1="26.75" y1="22.91" x2="37.25" y2="41.09" gradientUnits="userSpaceOnUse">
+    <!-- SUN (SMALL like icon 2) -->
+    <linearGradient id="sunGrad" x1="16.5" y1="19.67" x2="21.5" y2="28.33" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#fbbf24"/>
       <stop offset="0.45" stop-color="#fbbf24"/>
       <stop offset="1" stop-color="#f59e0b"/>
@@ -1444,12 +1452,13 @@ export const currentWeatherIcons = {
     <linearGradient id="dropD" x1="36.53" y1="42.95" x2="39.47" y2="48.05" xlink:href="#dropB"/>
   </defs>
 
-  <!-- SUN -->
+  <!-- SUN (SMALL) -->
   <g>
-    <circle cx="23" cy="24" r="8.5" stroke="#f8af18" stroke-width="0.5" fill="url(#sunGrad)"/>
-    <path d="M23,10V6m0,36V38M34,15l3-3M9,40l3-3m0-22-3-3M37,40l-3-3M10,24H6m36,0H38"
+    <circle cx="19" cy="24" r="5" stroke="#f8af18" stroke-width="0.5" fill="url(#sunGrad)"/>
+    <path
+      d="M19,15.67V12.5m0,23V32.33m5.89-14.22,2.24-2.24M10.87,32.13l2.24-2.24m0-11.78-2.24-2.24M27.13,32.13l-2.24-2.24M7.5,24h3.17M30.5,24H27.33"
       fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-width="2.5">
-      <animateTransform attributeName="transform" dur="45s" values="0 23 24; 360 23 24" repeatCount="indefinite" type="rotate"/>
+      <animateTransform attributeName="transform" dur="45s" values="0 19 24; 360 19 24" repeatCount="indefinite" type="rotate"/>
     </path>
   </g>
 
@@ -1484,7 +1493,6 @@ export const currentWeatherIcons = {
       fill="url(#cloudLight)"
       opacity="1"
     >
-      <!-- light -> fades out during darkening, stays off while dark, fades back in when lightening -->
       <animate
         attributeName="opacity"
         dur="10s"
@@ -1503,7 +1511,6 @@ export const currentWeatherIcons = {
       fill="url(#cloudDark)"
       opacity="0"
     >
-      <!-- fades in while darkening, stays, fades out while lightening -->
       <animate
         attributeName="opacity"
         dur="10s"
@@ -1514,7 +1521,7 @@ export const currentWeatherIcons = {
       />
     </path>
 
-    <!-- RAIN: starts when cloud darkens, stops when cloud lightens -->
+    <!-- RAIN -->
     <g opacity="0">
       <animate
         attributeName="opacity"
@@ -1975,140 +1982,113 @@ export const currentWeatherIcons = {
   },
   95: {
     text: "Bouřka",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
-          <defs>
-            <linearGradient id="a" x1="52.7" x2="133.4" y1="9.6" y2="149.3" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#9ca3af" />
-              <stop offset=".5" stop-color="#9ca3af" />
-              <stop offset="1" stop-color="#6b7280" />
-            </linearGradient>
-            <linearGradient id="b" x1="99.5" x2="232.6" y1="30.7" y2="261.4" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#6b7280" />
-              <stop offset=".5" stop-color="#6b7280" />
-              <stop offset="1" stop-color="#4b5563" />
-            </linearGradient>
-            <linearGradient id="c" x1="8.7" x2="80.9" y1="17.1" y2="142.1" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#f7b23b" />
-              <stop offset=".5" stop-color="#f7b23b" />
-              <stop offset="1" stop-color="#f59e0b" />
-            </linearGradient>
-            <linearGradient
-              id="d"
-              x1="1381.3"
-              x2="1399.5"
-              y1="-1144.7"
-              y2="-1097.4"
-              gradientTransform="rotate(-9 8002.567 8233.063)"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0" stop-color="#0b65ed" />
-              <stop offset=".5" stop-color="#0a5ad4" />
-              <stop offset="1" stop-color="#0950bc" />
-            </linearGradient>
-            <linearGradient xlink:href="#d" id="e" x1="1436.7" x2="1454.9" y1="-1137" y2="-1089.7" gradientTransform="rotate(-9 8009.537 8233.037)" />
-            <linearGradient
-              xlink:href="#d"
-              id="f"
-              x1="1492.1"
-              x2="1510.3"
-              y1="-1129.3"
-              y2="-1082.1"
-              gradientTransform="rotate(-9 8016.566 8233.078)"
-            />
-            <symbol id="h" viewBox="0 0 200.3 126.1">
-              <path
-                fill="url(#a)"
-                stroke="#848b98"
-                stroke-miterlimit="10"
-                d="M.5 93.2a32.4 32.4 0 0032.4 32.4h129.8v-.1l2.3.1a34.8 34.8 0 006.5-68.9 32.4 32.4 0 00-48.5-33 48.6 48.6 0 00-88.6 37.1h-1.5A32.4 32.4 0 00.5 93.1Z"
-              />
-            </symbol>
-            <symbol id="i" viewBox="0 0 350 222">
-              <path
-                fill="url(#b)"
-                stroke="#5b6472"
-                stroke-miterlimit="10"
-                stroke-width="6"
-                d="m291 107-2.5.1A83.9 83.9 0 00135.6 43 56 56 0 0051 91a56.6 56.6 0 00.8 9A60 60 0 0063 219l4-.2v.2h224a56 56 0 000-112Z"
-              />
-            </symbol>
-            <symbol id="g" overflow="visible" viewBox="0 0 398 222">
-              <use xlink:href="#h" width="200.3" height="126.1" transform="translate(198 27)">
-                <animateTransform
-                  additive="sum"
-                  attributeName="transform"
-                  dur="6s"
-                  repeatCount="indefinite"
-                  type="translate"
-                  values="-9 0; 9 0; -9 0"
-                />
-              </use>
-              <use xlink:href="#i" width="350" height="222">
-                <animateTransform
-                  additive="sum"
-                  attributeName="transform"
-                  dur="6s"
-                  repeatCount="indefinite"
-                  type="translate"
-                  values="-18 0; 18 0; -18 0"
-                />
-              </use>
-            </symbol>
-            <symbol id="j" overflow="visible" viewBox="0 0 129 57">
-              <path fill="url(#d)" stroke="#0a5ad4" stroke-miterlimit="10" d="M8.5 56.5a8 8 0 01-8-8v-40a8 8 0 0116 0v40a8 8 0 01-8 8Z" opacity="0">
-                <animateTransform
-                  id="x1"
-                  additive="sum"
-                  attributeName="transform"
-                  begin="0s; x1.end+.33s"
-                  dur=".67s"
-                  type="translate"
-                  values="0 -60; 0 60"
-                />
-                <animate id="y1" attributeName="opacity" begin="0s; y1.end+.33s" dur=".67s" keyTimes="0; .25; 1" values="0; 1; 0" />
-              </path>
-              <path fill="url(#e)" stroke="#0a5ad4" stroke-miterlimit="10" d="M64.5 56.5a8 8 0 01-8-8v-40a8 8 0 0116 0v40a8 8 0 01-8 8Z" opacity="0">
-                <animateTransform
-                  id="x2"
-                  additive="sum"
-                  attributeName="transform"
-                  begin=".33s; x2.end+.33s"
-                  dur=".67s"
-                  type="translate"
-                  values="0 -60; 0 60"
-                />
-                <animate id="y2" attributeName="opacity" begin=".33s; y2.end+.33s" dur=".67s" keyTimes="0; .25; 1" values="0; 1; 0" />
-              </path>
-              <path fill="url(#f)" stroke="#0a5ad4" stroke-miterlimit="10" d="M120.5 56.5a8 8 0 01-8-8v-40a8 8 0 0116 0v40a8 8 0 01-8 8Z" opacity="0">
-                <animateTransform
-                  id="x3"
-                  additive="sum"
-                  attributeName="transform"
-                  begin="-.33s; x3.end+.33s"
-                  dur=".67s"
-                  type="translate"
-                  values="0 -60; 0 60"
-                />
-                <animate id="y3" attributeName="opacity" begin="-.33s; y3.end+.33s" dur=".67s" keyTimes="0; .25; 1" values="0; 1; 0" />
-              </path>
-            </symbol>
-            <symbol id="k" viewBox="0 0 102.7 186.8">
-              <path fill="url(#c)" stroke="#f6a823" stroke-miterlimit="10" stroke-width="4" d="m34.8 2-32 96h32l-16 80 80-112h-48l32-64h-48z">
-                <animate
-                  id="x1"
-                  attributeName="opacity"
-                  begin="0s; x1.end+.67s"
-                  dur="1.33s"
-                  keyTimes="0; .38; .5; .63; .75; .86; .94; 1"
-                  values="1; 1; 0; 1; 0; 1; 0; 1"
-                />
-              </path>
-            </symbol>
-          </defs>
-          <use xlink:href="#g" width="398" height="222" transform="translate(68.84 145)" />
-          <use xlink:href="#j" width="129" height="57" transform="translate(191.5 343.5)" />
-          <use xlink:href="#k" width="102.7" height="186.7" transform="translate(205.23 291)" />
-        </svg>`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 512 512">
+
+  <defs>
+    <linearGradient id="w95-a" x1="52.7" x2="133.4" y1="9.6" y2="149.3" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9ca3af"/>
+      <stop offset=".5" stop-color="#9ca3af"/>
+      <stop offset="1" stop-color="#6b7280"/>
+    </linearGradient>
+
+    <linearGradient id="w95-b" x1="99.5" x2="232.6" y1="30.7" y2="261.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6b7280"/>
+      <stop offset=".5" stop-color="#6b7280"/>
+      <stop offset="1" stop-color="#4b5563"/>
+    </linearGradient>
+
+    <linearGradient id="w95-c" x1="8.7" x2="80.9" y1="17.1" y2="142.1" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f7b23b"/>
+      <stop offset=".5" stop-color="#f7b23b"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <linearGradient id="w95-d"
+      x1="1381.3" x2="1399.5" y1="-1144.7" y2="-1097.4"
+      gradientTransform="rotate(-9 8002.567 8233.063)"
+      gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b65ed"/>
+      <stop offset=".5" stop-color="#0a5ad4"/>
+      <stop offset="1" stop-color="#0950bc"/>
+    </linearGradient>
+
+    <linearGradient id="w95-e" xlink:href="#w95-d"
+      x1="1436.7" x2="1454.9" y1="-1137" y2="-1089.7"
+      gradientTransform="rotate(-9 8009.537 8233.037)"/>
+
+    <linearGradient id="w95-f" xlink:href="#w95-d"
+      x1="1492.1" x2="1510.3" y1="-1129.3" y2="-1082.1"
+      gradientTransform="rotate(-9 8016.566 8233.078)"/>
+
+    <symbol id="w95-h" viewBox="0 0 200.3 126.1">
+      <path fill="url(#w95-a)" stroke="#848b98" stroke-miterlimit="10"
+        d="M.5 93.2a32.4 32.4 0 0032.4 32.4h129.8v-.1l2.3.1a34.8 34.8 0 006.5-68.9 32.4 32.4 0 00-48.5-33 48.6 48.6 0 00-88.6 37.1h-1.5A32.4 32.4 0 00.5 93.1Z"/>
+    </symbol>
+
+    <symbol id="w95-i" viewBox="0 0 350 222">
+      <path fill="url(#w95-b)" stroke="#5b6472" stroke-miterlimit="10" stroke-width="6"
+        d="m291 107-2.5.1A83.9 83.9 0 00135.6 43 56 56 0 0051 91a56.6 56.6 0 00.8 9A60 60 0 0063 219l4-.2v.2h224a56 56 0 000-112Z"/>
+    </symbol>
+
+    <symbol id="w95-g" overflow="visible" viewBox="0 0 398 222">
+      <use xlink:href="#w95-h" width="200.3" height="126.1" transform="translate(198 27)">
+        <animateTransform additive="sum" attributeName="transform" dur="6s" repeatCount="indefinite"
+          type="translate" values="-9 0; 9 0; -9 0"/>
+      </use>
+      <use xlink:href="#w95-i" width="350" height="222">
+        <animateTransform additive="sum" attributeName="transform" dur="6s" repeatCount="indefinite"
+          type="translate" values="-18 0; 18 0; -18 0"/>
+      </use>
+    </symbol>
+
+    <!-- RAIN (falling) -->
+    <symbol id="w95-j" overflow="visible" viewBox="0 0 129 57">
+      <path fill="url(#w95-d)" stroke="#0a5ad4" stroke-miterlimit="10"
+        d="M8.5 56.5a8 8 0 01-8-8v-40a8 8 0 0116 0v40a8 8 0 01-8 8Z" opacity="0">
+        <animateTransform id="w95-rx1" additive="sum" attributeName="transform"
+          begin="0s; w95-ry1.end+.33s" dur=".67s" type="translate" values="0 -60; 0 60"/>
+        <animate id="w95-ry1" attributeName="opacity"
+          begin="0s; w95-ry1.end+.33s" dur=".67s" keyTimes="0;.25;1" values="0;1;0"/>
+      </path>
+
+      <path fill="url(#w95-e)" stroke="#0a5ad4" stroke-miterlimit="10"
+        d="M64.5 56.5a8 8 0 01-8-8v-40a8 8 0 0116 0v40a8 8 0 01-8 8Z" opacity="0">
+        <animateTransform id="w95-rx2" additive="sum" attributeName="transform"
+          begin=".33s; w95-ry2.end+.33s" dur=".67s" type="translate" values="0 -60; 0 60"/>
+        <animate id="w95-ry2" attributeName="opacity"
+          begin=".33s; w95-ry2.end+.33s" dur=".67s" keyTimes="0;.25;1" values="0;1;0"/>
+      </path>
+
+      <path fill="url(#w95-f)" stroke="#0a5ad4" stroke-miterlimit="10"
+        d="M120.5 56.5a8 8 0 01-8-8v-40a8 8 0 0116 0v40a8 8 0 01-8 8Z" opacity="0">
+        <animateTransform id="w95-rx3" additive="sum" attributeName="transform"
+          begin="-.33s; w95-ry3.end+.33s" dur=".67s" type="translate" values="0 -60; 0 60"/>
+        <animate id="w95-ry3" attributeName="opacity"
+          begin="-.33s; w95-ry3.end+.33s" dur=".67s" keyTimes="0;.25;1" values="0;1;0"/>
+      </path>
+    </symbol>
+
+    <!-- LIGHTNING (blinking) -->
+    <symbol id="w95-k" viewBox="0 0 102.7 186.8">
+      <path fill="url(#w95-c)" stroke="#f6a823" stroke-miterlimit="10" stroke-width="4"
+        d="m34.8 2-32 96h32l-16 80 80-112h-48l32-64h-48z">
+        <animate id="w95-bolt"
+          attributeName="opacity"
+          begin="0s; w95-bolt.end+.67s"
+          dur="1.33s"
+          keyTimes="0;.38;.5;.63;.75;.86;.94;1"
+          values="1;1;0;1;0;1;0;1"/>
+      </path>
+    </symbol>
+  </defs>
+
+  <use xlink:href="#w95-g" width="398" height="222" transform="translate(68.84 145)"/>
+  <use xlink:href="#w95-j" width="129" height="57" transform="translate(191.5 343.5)"/>
+  <use xlink:href="#w95-k" width="102.7" height="186.7" transform="translate(205.23 291)"/>
+
+</svg>`,
   },
   96: {
     text: "Bouřka s malými kroupami",
