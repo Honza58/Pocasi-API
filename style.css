@@ -83,7 +83,10 @@ h1 {
   border: 2px solid rgb(21, 207, 161);
   font-size: 0.7em;
 
-  transition: width 0.7s ease, font-size 0.3s ease, border-radius 0.7s ease;
+  transition:
+    width 0.7s ease,
+    font-size 0.3s ease,
+    border-radius 0.7s ease;
   cursor: pointer;
 }
 
@@ -182,6 +185,43 @@ h1 {
   animation: showCornerAfter 0.7s forwards;
 }
 
+.city-search__link {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 95px;
+  height: 34px;
+  font-size: 0.6em;
+  /* background-color: black; */
+   /* background: radial-gradient(
+    circle,
+    #ebe8e8 0%,
+    #3a3a3a 70%,
+    #000 100%
+  ); */
+  border-radius: 5px;
+  /* border: 2px solid rgb(45, 102, 88); */
+  box-shadow: 0px 0px 25px 1px rgb(21, 207, 161);
+
+}
+
+.city-search__link:hover {
+  border: 1px solid rgb(39, 218, 188);
+  height: 34px;
+  font-size: 0.6em;
+}
+
+.city-search__link a:hover {
+  color: rgb(39, 218, 188);
+  
+}
+
+.city-search__link a {
+  display: block;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
 /* obalující element seznam ikon, stav počasí, popisky k počasí, datum,čas,aktuální stav o počasí-horní část */
 .weather-app__content {
   padding: 30px 0 10px 0;
@@ -213,7 +253,9 @@ h1 {
   min-width: 150px;
   min-height: 35px;
   background-color: rgba(207, 207, 207, 0.6);
-  box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2),
+    inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
   border-radius: 10px;
 }
 
@@ -233,7 +275,9 @@ h1 {
   height: 35px;
   border-color: #e6e9ef #dfdddd #c5c4c4 #e6e9ef;
   background-color: rgba(207, 207, 207, 0.6);
-  box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2),
+    inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -253,7 +297,9 @@ h1 {
   align-items: center;
   justify-content: center;
   background-color: rgba(207, 207, 207, 0.6);
-  box-shadow: inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2), inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 3px 3px 6px 1px rgba(20, 20, 20, 0.2),
+    inset -3px -3px 6px 1px rgba(255, 255, 255, 0.9);
   border-radius: 10px;
 }
 
@@ -314,7 +360,6 @@ span {
 .valid {
   color: rgb(24, 44, 20);
 }
-
 
 /* stránka weather-forecast */
 
